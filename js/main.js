@@ -1,10 +1,37 @@
 //constantes
+let materialUtilizado = [ {
+    nombre : "Barra",
+    pesoMinimo : 20,
+    intervaloPeso: 2.5 },
+{
+    nombre : "maquina",
+    pesoMinimo: 5,
+    intervaloPeso: 5} ,
+{
+    nombre : "Mancuernas",
+    pesoMinimo: 2,
+    intervaloPeso: 0.5 },
+{
+    nombre: "corebag",
+    pesoMinimo: 5,
+    intervaloPeso: 5}
+]
 
-const ejercicios = ["Sentadillas", "Peso muerto", "Mariposa", "Remo Serrucho"]; 
+let ejerciciosPrecargados = [
+{
+    nombre : "Sentadillas",
+    material : [materialUtilizado[0] , materialUtilizado[2]] },
+{   nombre: "Peso muerto", 
+    material: [materialUtilizado[0] , materialUtilizado[2] ]} ,
+{   nombre : "Mariposa", 
+    material : materialUtilizado[1]},
+{   nombre : "Remo Serrucho",
+    material: materialUtilizado[2] }
+]; 
 
-const materiales = ["Barra", "Mancuernas", "Maquina"] ; 
 
-const pesoBase = { "Barra" : 20 }; 
+
+
 
 
 // tengo que hacer funciones que te pidan el ejercicio que vas a realizar, el material y el peso-- tambien preguntar si termina o no de entrenar y que todo se cargue en la rutina 
