@@ -1,121 +1,74 @@
 //constantes
-let materialUtilizado = [ {
-    nombre : "Barra",
-    pesoMinimo : 20,
-    intervaloPeso: 2.5 },
-{
-    nombre : "maquina",
-    pesoMinimo: 5,
-    intervaloPeso: 5} ,
-{
-    nombre : "Mancuernas",
-    pesoMinimo: 2,
-    intervaloPeso: 0.5 },
-{
-    nombre: "corebag",
-    pesoMinimo: 5,
-    intervaloPeso: 5}
+const materialUtilizado = [ {
+        nombre : "Barra",
+        pesoMinimo : 20,
+        intervaloPeso: 2.5 },
+    {
+        nombre : "maquina",
+        pesoMinimo: 5,
+        intervaloPeso: 5} ,
+    {
+        nombre : "Mancuernas",
+        pesoMinimo: 2,
+        intervaloPeso: 0.5 },
+    {
+        nombre: "corebag",
+        pesoMinimo: 5,
+        intervaloPeso: 5}
 ]
 
-let ejerciciosPrecargados = [
-{
-    nombre : "Sentadillas",
-    material : [materialUtilizado[0] , materialUtilizado[2]] },
-{   nombre: "Peso muerto", 
-    material: [materialUtilizado[0] , materialUtilizado[2] ]} ,
-{   nombre : "Mariposa", 
-    material : materialUtilizado[1]},
-{   nombre : "Remo Serrucho",
-    material: materialUtilizado[2] }
+const ejerciciosPrecargados = [
+    {
+        nombre : "Sentadillas",
+        material : [materialUtilizado[0] , materialUtilizado[2]] },
+    {   nombre: "Peso muerto", 
+        material: [materialUtilizado[0] , materialUtilizado[2] ]} ,
+    {   nombre : "Mariposa", 
+        material : materialUtilizado[1]},
+    {   nombre : "Remo Serrucho",
+        material: materialUtilizado[2] }
 ]; 
 
 
+//lista de cards con los ejercicios cargados y los materiales que se pueden utilizar 
 
+let ListaEjercicios = document.getElementById("ListaEjercicios")
+ejerciciosPrecargados.forEach(ejercicio => {
+  const cardExer = document.createElement("div");
+  cardExer.className = "cardEjercicio";
+  cardExer.textContent = ejercicio.nombre;
 
-
-
+  ListaEjercicios.appendChild(cardExer);
+});
 // tengo que hacer funciones que te pidan el ejercicio que vas a realizar, el material y el peso-- tambien preguntar si termina o no de entrenar y que todo se cargue en la rutina 
-
-//elegir el ejercicio -> que recurre a la base de ejerciccios
-
-function elejirEjercicio() {
-    let opcion;
-    do{
-        opcion = parseInt(prompt("Elegí segun el ejercicio a realizar:\n 1 - Sentadillas\n 2 - Peso Muerto \n 3 - Mariposa \n 4 - Remo Serrucho"));
-    } while (isNaN(opcion) || opcion <1 || opcion >4);
-
-    return ejercicios[opcion-1];
-}
+//hacer un buscador de ejercicios para ver si estan guardados, si no estan dar opcion de agregar uno nuevo cargando los materiales a utilizar con los que se pueda realizar
 
 
-// elegir material -> recurre a la base de datos 
-function elejirMaterial(){
-        let opcion;
-    do{
-        opcion = parseInt(prompt("Elegí el material que vas a utilizar : \n 1 - Barra \n 2 - Mancuernas \n 3 - Maquina"))
-    } while (isNaN(opcion) || opcion <1 || opcion >3);
-    return materiales[opcion-1];
-}
+
+// para que cuando se haga un ejercicio nuevo se cargue con el material que se va a utilizar.
+//let materialAUtilizar = document.getElementById("materialAUtilizar");
+
+// guardar la seleccion de material con el que es posible realizar el ejercicio
+//let materialesSeleccionados = [];
+
+//hacer capsulitas de material utilizado cuando se crea un nuevo ejercicio
+//materialUtilizado.forEach(material => {
+//  const capsula = document.createElement("div");
+//  capsula.classList.add("capsula");
+//  capsula.textContent = material.nombre;
+
+  // Evento para seleccionar/deseleccionar
+//  capsula.addEventListener("click", () => {
+//    capsula.classList.toggle("seleccionada");
+
+//    if (materialesSeleccionados.includes(material.nombre)) {
+//      materialesSeleccionados = materialesSeleccionados.filter(m => m !== material.nombre);
+//    } else {
+//      materialesSeleccionados.push(material.nombre);
+  //  }
 
 
-// cargar el peso, segun base de datos y con especificaciones segun material elegido
-function cargarPeso(material) {
-    let pesoUsuario;
-    let pesoTotal;
+  //});
 
-    if (material === "Barra") {
-        do {
-            pesoUsuario = parseFloat(prompt("Ingresá el peso que vas a usar"));
-        } while (pesoUsuario % 2.5 !== 0);
-
-        pesoTotal = pesoUsuario + 20;
-
-    } else if (material === "Maquina") {
-        
-        do {
-            pesoUsuario = parseFloat(prompt("Ingresá la cantidad de ladrillos que utilices"));
-        } while (pesoUsuario % 5 !== 0);
-
-        pesoTotal = pesoUsuario * 5;
-
-    } else if (material === "Mancuernas") {
-
-        pesoUsuario = parseFloat(prompt("Ingresá el peso que vas a usar con las mancuernas"));
-        pesoTotal = pesoUsuario;
-    }
-
-    return pesoTotal;
-}
-
-
-// rutina personalizada
-
-function flujo(){
-    let nombre = prompt("Ingresá tu nombre");
-    alert(`Hola ${nombre}! Vamos a entrenar 💪`);
-
-    let rutina = [];
-    let continuar = true;
-
-    while (continuar){
-        let ejercicioElegido= elejirEjercicio();
-        let materialElegido = elejirMaterial();
-        let pesoTotal = cargarPeso(materialElegido);
-
-        rutina.push({
-            ejercicio: ejercicioElegido,
-            material : materialElegido,
-            peso: pesoTotal
-        });
-
-        continuar = confirm ("¿Querés cargar otro ejercicio?");
-    }
-    
-    console.log("Hola, ", nombre)
-
-    console.log("Hoy entrenaste:", rutina);
-
-
-};
-
-flujo();
+  //materialAUtilizar.appendChild(capsula);
+//});
