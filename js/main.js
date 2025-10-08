@@ -47,28 +47,30 @@ materialUtilizado.forEach(mat => {
     } else {
       materialesSeleccionados.push(mat.nombre);
     }
-
-    
+  });
   materialAUtilizar.appendChild(capsula);
 });
 
-const form = document.getElementById("formEx")
+const form.document.getElementById("formEx")
 form = addEventListener("submit", (e) => {
         const nombre = document.getElementById("nombreNuevoEjercicio").value;
-        let materiales = materialesUtilizados;
+        let materiales =  materialesSeleccionados ;
 
-        const nuevoEjercicio = {
-             const nombre = nombre,
-             const materiales = materiales};
+        const nuevoEjercicio : {
+             nombre = nombre,
+             materiales = materiales};
              listaNuevosEj("nuevoEjercicio");      
 });
 function listaNuevosEj(ejercicioN) {
         let ejercicioNs = JSON.parse(localStorage.getItem("ejercicioNs")) || [];
-  ejercicios.push(ejercicioN);
+  ejercicioNs.push(ejercicioN);
   localStorage.setItem("ejercicioNs", JSON.stringify(ejercicioNs));
 }
 
-let listaCompletaEj = [listaNuevosEj,ejerciciosPrecargados];
+let listaCompletaEj = [
+        listaNuevosEj,
+        (JSON.parse(localStorage.getItem("ejercicioNs")) || [])
+];
         
 
 
