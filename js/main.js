@@ -29,6 +29,31 @@ const ejerciciosPrecargados = [
         material: materialUtilizado[2] }
 ]; 
 
+//capsulas de material a utilizar para el form de agregar ejercicio
+
+const materialAUtilizar = document.getElementById("materialAUtilizar");
+let materialesSeleccionados = [];
+
+materialUtilizado.forEach(mat => {
+  const capsula = document.createElement("div");
+  capsula.classList.add("capsula");
+  capsula.textContent = mat.nombre;
+
+  capsula.addEventListener("click", () => {
+    capsula.classList.toggle("seleccionada");
+
+    if (materialesSeleccionados.includes(mat.nombre)) {
+      materialesSeleccionados = materialesSeleccionados.filter(m => m !== mat.nombre);
+    } else {
+      materialesSeleccionados.push(mat.nombre);
+    }
+
+    
+  materialAUtilizar.appendChild(capsula);
+});
+
+
+
 
 //lista de cards con los ejercicios cargados y los materiales que se pueden utilizar 
 
