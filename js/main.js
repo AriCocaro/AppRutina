@@ -52,13 +52,30 @@ materialUtilizado.forEach(mat => {
   materialAUtilizar.appendChild(capsula);
 });
 
+const form = document.getElementById("formEx")
+form = addEventListener("submit", (e) => {
+        const nombre = document.getElementById("nombreNuevoEjercicio").value;
+        let materiales = materialesUtilizados;
 
+        const nuevoEjercicio = {
+             const nombre = nombre,
+             const materiales = materiales};
+             listaNuevosEj("nuevoEjercicio");      
+});
+function listaNuevosEj(ejercicioN) {
+        let ejercicioNs = JSON.parse(localStorage.getItem("ejercicioNs")) || [];
+  ejercicios.push(ejercicioN);
+  localStorage.setItem("ejercicioNs", JSON.stringify(ejercicioNs));
+}
+
+let listaCompletaEj = [listaNuevosEj,ejerciciosPrecargados];
+        
 
 
 //lista de cards con los ejercicios cargados y los materiales que se pueden utilizar 
 
 let ListaEjercicios = document.getElementById("ListaEjercicios")
-ejerciciosPrecargados.forEach(ejercicio => {
+listaCompletaEj.forEach(ejercicio => {
   const cardExer = document.createElement("div");
   cardExer.className = "cardEjercicio";
   cardExer.textContent = ejercicio.nombre;
