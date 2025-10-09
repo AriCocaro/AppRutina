@@ -51,15 +51,15 @@ materialUtilizado.forEach(mat => {
   materialAUtilizar.appendChild(capsula);
 });
 
-const form.document.getElementById("formEx")
-form = addEventListener("submit", (e) => {
+const form = document.getElementById("formExN")
+form.addEventListener("submit", (e) => {
         const nombre = document.getElementById("nombreNuevoEjercicio").value;
         let materiales =  materialesSeleccionados ;
 
-        const nuevoEjercicio : {
-             nombre = nombre,
-             materiales = materiales};
-             listaNuevosEj("nuevoEjercicio");      
+        const nuevoEjercicio = {
+             nombre : nombre,
+             materiales : materiales};
+             listaNuevosEj("nuevoEjercicio")      
 });
 function listaNuevosEj(ejercicioN) {
         let ejercicioNs = JSON.parse(localStorage.getItem("ejercicioNs")) || [];

@@ -7,4 +7,45 @@
   font-weight: bold;
 }
 
+#materialAUtilizar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: flex-start;
+  margin-top: 1rem;
+}
+
+.capsula {
+  background-color: #e3e6ea;
+  color: #0b1820;
+  border: 1.5px solid yellow;
+  border-radius: 2rem;
+  padding: 0.4rem 1rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+}
+.capsula:hover {
+  background-color: #d9dde3;
+  transform: scale(1.05);
+}
+.capsula.seleccionada {
+  background-color: #5a98bf;
+  border-color: black;
+  color: white;
+  transform: scale(1.08);
+}
+.capsula:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 600px) {
+  .capsula {
+    font-size: 0.85rem;
+    padding: 0.3rem 0.8rem;
+  }
+}
+
 /*# sourceMappingURL=estilo.css.map */
