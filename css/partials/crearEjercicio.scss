@@ -1,67 +1,32 @@
-.cardEjercicio {
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  padding: 10px;
-  margin: 8px 0;
-  background-color: #f8f8f8;
-  font-weight: bold;
-}
+$capsula-color: #5a98bf;
+$capsula-selected: #bc3963;
+$text-color: #fff;
+$card-bg: #f0f0f0;
 
-//capsulas de materiales 
-
-
-$color-base: #e3e6ea;
-$color-activo: #5a98bf;
-$color-texto: #0b1820;
-$color-hover: #d9dde3;
-$transicion: 0.25s ease;
-
-// Contenedor general de las cápsulas
-#materialAUtilizar {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.75rem;
-  justify-content: flex-start;
-  margin-top: 1rem;
-}
-
-// Cada cápsula individual
 .capsula {
-  background-color: $color-base;
-  color: $color-texto;
-  border: 1.5px solid yellow;
-  border-radius: 2rem;
-  padding: 0.4rem 1rem;
-  font-size: 0.95rem;
-  font-weight: 500;
+  display: inline-block;
+  padding: 8px 16px;
+  margin: 5px;
+  border-radius: 20px;
+  background-color: $capsula-color;
+  color: $text-color;
   cursor: pointer;
   user-select: none;
-  transition:
-    background-color $transicion,
-    transform $transicion,
-    border-color $transicion;
+  transition: background-color 0.3s, transform 0.2s;
 
   &:hover {
-    background-color: $color-hover;
     transform: scale(1.05);
   }
 
   &.seleccionada {
-    background-color: $color-activo;
-    border-color: black;
-    color: white;
-    transform: scale(1.08);
-  }
-
-  &:active {
-    transform: scale(0.98);
+    background-color: $capsula-selected;
   }
 }
 
-// Versión adaptada para pantallas pequeñas
-@media (max-width: 600px) {
-  .capsula {
-    font-size: 0.85rem;
-    padding: 0.3rem 0.8rem;
-  }
+.cardEjercicio {
+  background-color: $card-bg;
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin: 8px 0;
+  font-weight: bold;
 }
