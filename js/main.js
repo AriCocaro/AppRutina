@@ -68,3 +68,4 @@ function listaNuevosEj(ejercicioN) {
     localStorage.setItem("ejercicioNs", JSON.stringify(ejercicioNs)); 
     mostrarEjercicios(); // refresca la lista en pantalla
 } 
+

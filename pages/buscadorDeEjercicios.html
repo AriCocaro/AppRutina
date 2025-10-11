@@ -20,7 +20,7 @@
     <main>
         <h1>Ejercicios Cargados</h1>
 
-        <section class="crearEjercicio">
+        <section class="crearEjercicio invisible ">
             <form id="formExN">
                 <div class="mb-3">
                 <label for="nombreNuevoEjercicio" class="form-label">Nombre del ejercicio</label>
@@ -33,8 +33,15 @@
             </form>
         </section>
 
-        <section>
-            <div id="ListaEjercicios"></div>
+        <section class="visible">
+            <div id="">
+                <input type="text" id="buscador" placeholder="Buscar ejercicio...">
+                <div id="ListaEjericicios">
+
+                </div>
+               
+
+            </div>
         </section>
   </main>
 

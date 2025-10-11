@@ -1,1 +1,1 @@
-{"version":3,"sourceRoot":"","sources":["partials/crearEjercicio.scss"],"names":[],"mappings":"AAKA;EACE;EACA;EACA;EACA;EACA,kBAVc;EAWd,OATW;EAUX;EACA;EACA;;AAEA;EACE;;AAGF;EACE,kBApBe;;;AAwBnB;EACE,kBAvBQ;EAwBR;EACA;EACA;EACA","file":"estilo.css"}
+{"version":3,"sourceRoot":"","sources":["partials/crearEjercicio.scss"],"names":[],"mappings":"AAKA;EACE;EACA;EACA;EACA;EACA,kBAVc;EAWd,OATW;EAUX;EACA;EACA;;AAEA;EACE;;AAGF;EACE,kBApBe;;;AAwBnB;EACE,kBAvBQ;EAwBR;EACA;EACA;EACA;;;AAEF;EACE","file":"estilo.css"}
