@@ -1,10 +1,18 @@
+@charset "UTF-8";
+/*Paleta de colores*/
+h1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .capsula {
   display: inline-block;
   padding: 8px 16px;
   margin: 5px;
   border-radius: 20px;
-  background-color: #5a98bf;
-  color: #fff;
+  background-color: black;
+  color: rgb(225, 202, 58);
   cursor: pointer;
   user-select: none;
   transition: background-color 0.3s, transform 0.2s;
@@ -13,19 +21,36 @@
   transform: scale(1.05);
 }
 .capsula.seleccionada {
-  background-color: #bc3963;
+  background-color: rgb(225, 202, 58);
+  color: black;
+}
+
+.contenedorCards {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
 
 .cardEjercicio {
-  background-color: #f0f0f0;
-  border-radius: 10px;
-  padding: 10px 15px;
-  margin: 8px 0;
+  width: 300px; /* ancho fijo recomendable */
+  max-width: 100%; /* se adapta en pantallas más pequeñas */
+  padding: 15px;
+  margin: 10px;
+  border-radius: 8px;
+  background-color: white;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   font-weight: bold;
+  display: inline-block; /* o flex según layout */
+  vertical-align: top;
 }
 
 .invisible {
   display: none;
+}
+
+.crearEjercicio {
+  justify-content: center;
+  align-items: center;
 }
 
 /*# sourceMappingURL=estilo.css.map */

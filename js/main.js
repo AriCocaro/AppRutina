@@ -54,7 +54,7 @@ materialUtilizado.forEach(mat => {
 // Guardar nuevo ejercicio 
 const form = document.getElementById("formExN"); 
 form.addEventListener("submit", (e) => { 
-    e.preventDefault(); // evita que se recargue la página 
+    e.preventDefault();  
     const nombre = document.getElementById("nombreNuevoEjercicio").value;
     const materiales = materialesSeleccionados; 
     const nuevoEjercicio = { nombre: nombre, 
@@ -70,19 +70,19 @@ function listaNuevosEj(ejercicioN) {
     let ejercicioNs = JSON.parse(localStorage.getItem("ejercicioNs")) || [];
     ejercicioNs.push(ejercicioN); 
     localStorage.setItem("ejercicioNs", JSON.stringify(ejercicioNs)); 
-    mostrarEjercicios(); // refresca la lista en pantalla
+    mostrarEjercicios(); 
 } 
 
-// Elementos
+
 const buscador = document.getElementById("buscador");
 
-// Filtrado en tiempo real
+
 buscador.addEventListener("input", function() {
-    const texto = buscador.value.toLowerCase(); // minusculas para comparación
+    const texto = buscador.value.toLowerCase(); 
     mostrarEjercicios(texto);
 });
 
-// Modificamos mostrarEjercicios para recibir un filtro opcional
+// mostrar ejercicios + filtro
 function mostrarEjercicios(filtro = "") {
     const listaDiv = document.getElementById("ListaEjercicios");
     listaDiv.innerHTML = ""; // limpiar lista
@@ -92,7 +92,7 @@ function mostrarEjercicios(filtro = "") {
 
     let coincidencias = 0;
 
-    // Mostrar ejercicios que coincidan
+    // coincidencias
     for (let i = 0; i < listaCompleta.length; i++) {
         const ejercicio = listaCompleta[i];
         if (ejercicio.nombre.toLowerCase().includes(filtro)) {
@@ -128,20 +128,19 @@ function mostrarEjercicios(filtro = "") {
     // Card “Agregar ejercicio” siempre al final
     const cardAgregar = document.createElement("div");
     cardAgregar.className = "cardEjercicio";
-    cardAgregar.style.fontStyle = "italic";
-    cardAgregar.style.cursor = "pointer";
     cardAgregar.textContent = "Agregar ejercicio";
 
     cardAgregar.addEventListener("click", () => {
-        // Aquí podrías mostrar el formulario para agregar uno nuevo
+        
+
         document.querySelector(".crearEjercicio").classList.remove("invisible");
-        buscador.value = ""; // limpiar buscador
-        mostrarEjercicios(); // refrescar lista completa
+        buscador.value = ""; 
+        mostrarEjercicios(); 
     });
 
     listaDiv.appendChild(cardAgregar);
 
-    // Si no hay coincidencias, la card de “Agregar ejercicio” puede destacar
+    
     if (coincidencias === 0 && filtro !== "") {
         cardAgregar.style.color = "red";
     } else {
