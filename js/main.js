@@ -73,43 +73,81 @@ function listaNuevosEj(ejercicioN) {
     mostrarEjercicios(); // refresca la lista en pantalla
 } 
 
-function mostrarEjercicios() {
-  const listaDiv = document.getElementById("ListaEjercicios");
-  listaDiv.innerHTML = ""; // limpiar antes de renderizar
+// Elementos
+const buscador = document.getElementById("buscador");
 
-  const ejerciciosGuardados = JSON.parse(localStorage.getItem("ejercicioNs")) || [];
+// Filtrado en tiempo real
+buscador.addEventListener("input", function() {
+    const texto = buscador.value.toLowerCase(); // minusculas para comparación
+    mostrarEjercicios(texto);
+});
 
-  const listaCompleta = [...ejerciciosPrecargados, ...ejerciciosGuardados];
+// Modificamos mostrarEjercicios para recibir un filtro opcional
+function mostrarEjercicios(filtro = "") {
+    const listaDiv = document.getElementById("ListaEjercicios");
+    listaDiv.innerHTML = ""; // limpiar lista
 
-  listaCompleta.forEach(ejercicio => {
-    const card = document.createElement("div");
-    card.className = "cardEjercicio";
+    const ejerciciosGuardados = JSON.parse(localStorage.getItem("ejercicioNs")) || [];
+    const listaCompleta = [...ejerciciosPrecargados, ...ejerciciosGuardados];
 
-    //titulos de las cards - nombre de los ejercicios 
-     const titulo = document.createElement("strong");
-    titulo.textContent = ejercicio.nombre;
-    card.appendChild(titulo);
+    let coincidencias = 0;
 
-    //subtitulos con los materiales
-    if (ejercicio.materiales) {
-      // Nuevos (solo strings)
-      for (let i = 0; i < ejercicio.materiales.length; i++) {
-        const p = document.createElement("p");
-        p.textContent = ejercicio.materiales[i];
-        card.appendChild(p);
-      }
-    } else if (ejercicio.material) {
-      // Precargados (objetos)
-      for (let i = 0; i < ejercicio.material.length; i++) {
-        const p = document.createElement("p");
-        p.textContent = ejercicio.material[i].nombre;
-        card.appendChild(p);
-      }
+    // Mostrar ejercicios que coincidan
+    for (let i = 0; i < listaCompleta.length; i++) {
+        const ejercicio = listaCompleta[i];
+        if (ejercicio.nombre.toLowerCase().includes(filtro)) {
+            coincidencias++;
+
+            const card = document.createElement("div");
+            card.className = "cardEjercicio";
+
+            // Nombre del ejercicio
+            const titulo = document.createElement("strong");
+            titulo.textContent = ejercicio.nombre;
+            card.appendChild(titulo);
+
+            // Materiales en <p>
+            if (ejercicio.materiales) {
+                for (let j = 0; j < ejercicio.materiales.length; j++) {
+                    const p = document.createElement("p");
+                    p.textContent = ejercicio.materiales[j];
+                    card.appendChild(p);
+                }
+            } else if (ejercicio.material) {
+                for (let j = 0; j < ejercicio.material.length; j++) {
+                    const p = document.createElement("p");
+                    p.textContent = ejercicio.material[j].nombre;
+                    card.appendChild(p);
+                }
+            }
+
+            listaDiv.appendChild(card);
+        }
     }
 
-    listaDiv.appendChild(card);
-  });
+    // Card “Agregar ejercicio” siempre al final
+    const cardAgregar = document.createElement("div");
+    cardAgregar.className = "cardEjercicio";
+    cardAgregar.style.fontStyle = "italic";
+    cardAgregar.style.cursor = "pointer";
+    cardAgregar.textContent = "Agregar ejercicio";
+
+    cardAgregar.addEventListener("click", () => {
+        // Aquí podrías mostrar el formulario para agregar uno nuevo
+        document.querySelector(".crearEjercicio").classList.remove("invisible");
+        buscador.value = ""; // limpiar buscador
+        mostrarEjercicios(); // refrescar lista completa
+    });
+
+    listaDiv.appendChild(cardAgregar);
+
+    // Si no hay coincidencias, la card de “Agregar ejercicio” puede destacar
+    if (coincidencias === 0 && filtro !== "") {
+        cardAgregar.style.color = "red";
+    } else {
+        cardAgregar.style.color = "black";
+    }
 }
 
-document.addEventListener("DOMContentLoaded", mostrarEjercicios);
-
+// Mostrar todos al cargar la página
+document.addEventListener("DOMContentLoaded", () => mostrarEjercicios());
