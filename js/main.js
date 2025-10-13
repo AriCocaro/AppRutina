@@ -63,6 +63,8 @@ form.addEventListener("submit", (e) => {
     form.reset(); 
     materialesSeleccionados = []; // limpia la selección
    document.querySelectorAll(".capsula").forEach(c => c.classList.remove("seleccionada"));
+   document.querySelector(".crearEjercicio").classList.add("invisible"); // vuelve a cerrar el form
+
 
 }); 
 // Guardar en localStorage 
@@ -101,12 +103,15 @@ function mostrarEjercicios(filtro = "") {
             const card = document.createElement("div");
             card.className = "cardEjercicio";
 
-            // Nombre del ejercicio
-            const titulo = document.createElement("strong");
+           
+            const titulo = document.createElement("h2");
+            titulo.className = "nombreCard"
             titulo.textContent = ejercicio.nombre;
             card.appendChild(titulo);
 
-            // Materiales en <p>
+            
+
+           
             if (ejercicio.materiales) {
                 for (let j = 0; j < ejercicio.materiales.length; j++) {
                     const p = document.createElement("p");
@@ -125,7 +130,7 @@ function mostrarEjercicios(filtro = "") {
         }
     }
 
-    // Card “Agregar ejercicio” siempre al final
+    // Card “Agregar ejercicio” 
     const cardAgregar = document.createElement("div");
     cardAgregar.className = "cardEjercicio";
     cardAgregar.textContent = "Agregar ejercicio";

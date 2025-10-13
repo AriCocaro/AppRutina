@@ -1,9 +1,22 @@
-@charset "UTF-8";
 /*Paleta de colores*/
 h1 {
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.contenedorBuscador {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+  margin-bottom: 20px;
+}
+
+#buscador {
+  width: 300px;
+  max-width: 80%;
+  border-radius: 8px;
+  font-size: 16px;
 }
 
 .capsula {
@@ -27,21 +40,30 @@ h1 {
 
 .contenedorCards {
   display: flex;
-  justify-content: space-between;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 40px;
+  box-sizing: border-box;
   margin-top: 20px;
+  margin-left: 20px;
 }
 
 .cardEjercicio {
-  width: 300px; /* ancho fijo recomendable */
-  max-width: 100%; /* se adapta en pantallas más pequeñas */
+  width: 300px;
+  max-width: 100%;
+  min-height: 150px;
   padding: 15px;
   margin: 10px;
   border-radius: 8px;
   background-color: white;
+  color: black;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   font-weight: bold;
-  display: inline-block; /* o flex según layout */
+  display: inline-block;
   vertical-align: top;
+  align-items: center;
+  justify-content: center;
 }
 
 .invisible {
@@ -51,6 +73,76 @@ h1 {
 .crearEjercicio {
   justify-content: center;
   align-items: center;
+}
+
+body {
+  background-color: black;
+  font-family: "Montserrat", sans-serif;
+  color: white;
+}
+
+header {
+  width: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+}
+header .Encabezado {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-height: 130px;
+  background-color: black;
+  padding: 0 20px;
+  flex-wrap: nowrap;
+}
+header .Encabezado a {
+  display: block;
+}
+header .Encabezado figure {
+  margin: 0;
+}
+header .Encabezado figure .LogoInst {
+  max-height: 130px;
+  display: block;
+  padding: 10px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+main h1 {
+  text-align: center;
+}
+main {
+  align-items: center;
+  padding-bottom: 60px;
+  margin-left: 40px;
+}
+
+.btn-primary {
+  background-color: rgb(225, 202, 58);
+  color: black;
+}
+
+.btn-primary:hover {
+  background-color: black;
+  color: rgb(225, 202, 58);
+  border-color: white;
+}
+
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 1rem;
+  background-color: black;
+  max-height: 60px;
 }
 
 /*# sourceMappingURL=estilo.css.map */
