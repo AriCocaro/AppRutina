@@ -59,7 +59,11 @@ form.addEventListener("submit", (e) => {
     const materiales = materialesSeleccionados; 
     const nuevoEjercicio = { nombre: nombre, 
                              materiales: materiales }; 
-    listaNuevosEj(nuevoEjercicio); form.reset(); 
+    listaNuevosEj(nuevoEjercicio);
+    form.reset(); 
+    materialesSeleccionados = []; // limpia la selección
+   document.querySelectorAll(".capsula").forEach(c => c.classList.remove("seleccionada"));
+
 }); 
 // Guardar en localStorage 
 function listaNuevosEj(ejercicioN) { 
@@ -68,4 +72,44 @@ function listaNuevosEj(ejercicioN) {
     localStorage.setItem("ejercicioNs", JSON.stringify(ejercicioNs)); 
     mostrarEjercicios(); // refresca la lista en pantalla
 } 
+
+function mostrarEjercicios() {
+  const listaDiv = document.getElementById("ListaEjercicios");
+  listaDiv.innerHTML = ""; // limpiar antes de renderizar
+
+  const ejerciciosGuardados = JSON.parse(localStorage.getItem("ejercicioNs")) || [];
+
+  const listaCompleta = [...ejerciciosPrecargados, ...ejerciciosGuardados];
+
+  listaCompleta.forEach(ejercicio => {
+    const card = document.createElement("div");
+    card.className = "cardEjercicio";
+
+    //titulos de las cards - nombre de los ejercicios 
+     const titulo = document.createElement("strong");
+    titulo.textContent = ejercicio.nombre;
+    card.appendChild(titulo);
+
+    //subtitulos con los materiales
+    if (ejercicio.materiales) {
+      // Nuevos (solo strings)
+      for (let i = 0; i < ejercicio.materiales.length; i++) {
+        const p = document.createElement("p");
+        p.textContent = ejercicio.materiales[i];
+        card.appendChild(p);
+      }
+    } else if (ejercicio.material) {
+      // Precargados (objetos)
+      for (let i = 0; i < ejercicio.material.length; i++) {
+        const p = document.createElement("p");
+        p.textContent = ejercicio.material[i].nombre;
+        card.appendChild(p);
+      }
+    }
+
+    listaDiv.appendChild(card);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", mostrarEjercicios);
 
