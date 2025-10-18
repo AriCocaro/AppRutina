@@ -59,6 +59,37 @@ form.addEventListener("submit", (e) => {
     const materiales = materialesSeleccionados; 
     const nuevoEjercicio = { nombre: nombre, 
                              materiales: materiales }; 
+    let estado;
+    if (nombre === ""){
+     estado = "vacio" ;
+    }else if (listaCompleta.includes(nombre){
+     estado = "repetido";
+    }else {
+     estado= "ok";
+    }
+
+ swich (estado) {
+  case "vacio":
+  Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "El campo Nombre no puede estar vacío.",
+  });
+  break;
+  case "repetido":
+   Swal.fire({
+  icon: "warning",
+  text: "Este ejercicio se encuentra repetido.",
+  });
+  break;
+  case "ok":
+   Swal.fire({
+  title: "Ejercicio guardado con éxito.",
+  icon: "success",
+  draggable: true
+});
+  
+  
     listaNuevosEj(nuevoEjercicio);
     form.reset(); 
     materialesSeleccionados = []; // limpia la selección
