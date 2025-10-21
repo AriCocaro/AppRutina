@@ -1,36 +1,4 @@
-// Constantes
- const materialUtilizado = [ 
-    { nombre: "Barra", 
-      pesoMinimo: 20,
-      intervaloPeso: 2.5 
-    },
-    { nombre: "Maquina", 
-      pesoMinimo: 5, 
-      intervaloPeso: 5 
-    }, 
-    { nombre: "Mancuernas", 
-      pesoMinimo: 2, 
-      intervaloPeso: 0.5 
-    },
-    { nombre: "Corebag",
-      pesoMinimo: 5, 
-      intervaloPeso: 5 
-    } 
-]; 
-const ejerciciosPrecargados = [
- { nombre: "Sentadillas", 
-   material: [materialUtilizado[0], materialUtilizado[2]] 
- }, 
- { nombre: "Peso muerto", 
-   material: [materialUtilizado[0], materialUtilizado[2]] 
- },
- { nombre: "Mariposa", 
-   material: [materialUtilizado[1]] 
- },
- { nombre: "Remo Serrucho",
-   material: [materialUtilizado[2]] 
- } 
-];
+
 
 // Capsulas de material 
 const materialAUtilizar = document.getElementById("materialAUtilizar");
