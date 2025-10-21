@@ -87,7 +87,8 @@ form.addEventListener("submit", (e) => {
    document.querySelectorAll(".capsula").forEach(c => c.classList.remove("seleccionada"));
    document.querySelector(".crearEjercicio").classList.add("invisible"); // vuelve a cerrar el form
 
-
+ 
+ }
 }); 
 // Guardar en localStorage 
 function listaNuevosEj(ejercicioN) { 
