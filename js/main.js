@@ -1,13 +1,23 @@
 // trayendo los datos precargados desde json
-let materialUtilizado;
-fetch (/db/materialUt.js)
- .then(response => response.json())
- .then(matjson => {
-     materialUtilizado = matjson;
- })
-  .catch(error => {
-    console.error("Error al cargar la base de datos:", error);
-  });
+let materialUtilizado = [];
+let ejerciciosPrecargados = [];
+
+async function cargarDatos() {
+  try {
+    const resMateriales = await fetch('/db/materialUt.json');
+    const resEjercicios = await fetch('/db/ejerciciosPrec.json');
+
+    if (!resMateriales.ok || !resEjercicios.ok) {
+      throw new Error("Error en el fetch");
+    }
+
+    materialUtilizado = await resMateriales.json();
+    ejerciciosPrecargados = await resEjercicios.json();
+  } catch (error) {
+    console.error("Error al cargar datos:", error);
+  }
+}
+
 
 // Capsulas de material 
 const materialAUtilizar = document.getElementById("materialAUtilizar");
