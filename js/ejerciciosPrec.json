@@ -1,0 +1,28 @@
+[
+  {
+    "nombre": "Sentadillas",
+    "material": [
+      "Barra",
+      "Mancuernas"
+    ]
+  },
+  {
+    "nombre": "Peso muerto",
+    "material": [
+      "Barra",
+      "Mancuernas"
+    ]
+  },
+  {
+    "nombre": "Mariposa",
+    "material": [
+      "Maquina"
+    ]
+  },
+  {
+    "nombre": "Remo Serrucho",
+    "material": [
+      "Mancuernas"
+    ]
+  }
+]
