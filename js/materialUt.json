@@ -20,17 +20,4 @@
     "intervaloPeso": 5
   }
 ]
-const ejerciciosPrecargados = [
- { nombre: "Sentadillas", 
-   material: [materialUtilizado[0], materialUtilizado[2]] 
- }, 
- { nombre: "Peso muerto", 
-   material: [materialUtilizado[0], materialUtilizado[2]] 
- },
- { nombre: "Mariposa", 
-   material: [materialUtilizado[1]] 
- },
- { nombre: "Remo Serrucho",
-   material: [materialUtilizado[2]] 
- } 
-];
+
