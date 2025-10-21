@@ -4,8 +4,8 @@ let ejerciciosPrecargados = [];
 
 async function cargarDatos() {
   try {
-    const resMateriales = await fetch('/db/materialUt.json');
-    const resEjercicios = await fetch('/db/ejerciciosPrec.json');
+    const resMateriales = await fetch('/bd/materialUt.json');
+    const resEjercicios = await fetch('/bd/ejerciciosPrec.json');
 
     if (!resMateriales.ok || !resEjercicios.ok) {
       throw new Error("Error en el fetch");
@@ -23,7 +23,7 @@ async function cargarDatos() {
 const materialAUtilizar = document.getElementById("materialAUtilizar");
 let materialesSeleccionados = []; 
 
-function cargarCapsulasMaterial() { // para cargar las capsulas luego de que tenes los datos para hacerlo
+function cargarCapsulasMaterial() { // para cargar las capsulas luego de que tener los datos para hacerlo
   materialAUtilizar.innerHTML = "";
 
 materialUtilizado.forEach(mat => { 
@@ -53,7 +53,7 @@ form.addEventListener("submit", (e) => {
     let estado;
     if (nombre === ""){
      estado = "vacio" ;
-    }else if (listaCompleta.includes(nombre)){
+    }else if (listaCompleta.some(nombre)){
      estado = "repetido";
     }else {
      estado= "ok";
@@ -106,6 +106,8 @@ buscador.addEventListener("input", function() {
     const texto = buscador.value.toLowerCase(); 
     mostrarEjercicios(texto);
 });
+
+let listaCompleta = [] ; //para obtener acceso desde cualquier lado
 
 // mostrar ejercicios + filtro
 function mostrarEjercicios(filtro = "") {
