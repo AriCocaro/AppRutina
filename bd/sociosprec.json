@@ -1,0 +1,34 @@
+[
+  {
+    "dni": "38170884",
+    "nombreCompleto": "Ariadna Camila Cocaro",
+    "sexo": "femenino",
+    "fechaNacimiento": "1995-01-29",
+    "edad": 30,
+    "entrenamientosPorSemana": 3
+  },
+  {
+    "dni": "42578426",
+    "nombreCompleto": "Carina Navarrete",
+    "sexo": "femenino",
+    "fechaNacimiento": "2000-04-26",
+    "edad": 25,
+    "entrenamientosPorSemana": 5
+  },
+  {
+    "dni": "39718189",
+    "nombreCompleto": "Juan Patricio Flejas",
+    "sexo": "masculino",
+    "fechaNacimiento": "1997-10-03",
+    "edad": 29,
+    "entrenamientosPorSemana": 3
+  },
+  {
+    "dni": "40790458",
+    "nombreCompleto": "Magallan Santiago",
+    "sexo": "masculino",
+    "fechaNacimiento": "1998-01-20",
+    "edad": 27,
+    "entrenamientosPorSemana": 3
+  }
+]

@@ -18,6 +18,7 @@ async function cargarDatos() {
   }
 }
 
+//buscador de ejercicios y agregar ejercicios
 
 // Capsulas de material 
 const materialAUtilizar = document.getElementById("materialAUtilizar");
@@ -185,3 +186,4 @@ document.addEventListener("DOMContentLoaded", async () => {
   mostrarEjercicios();     // muestra todo
 });
 
+// hacer Rutina 
