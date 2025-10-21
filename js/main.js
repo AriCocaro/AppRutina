@@ -53,13 +53,13 @@ form.addEventListener("submit", (e) => {
     let estado;
     if (nombre === ""){
      estado = "vacio" ;
-    }else if (listaCompleta.includes(nombre){
+    }else if (listaCompleta.includes(nombre)){
      estado = "repetido";
     }else {
      estado= "ok";
     }
 
- swich (estado) {
+ switch (estado) {
   case "vacio":
   Swal.fire({
   icon: "error",
