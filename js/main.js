@@ -23,6 +23,9 @@ async function cargarDatos() {
 const materialAUtilizar = document.getElementById("materialAUtilizar");
 let materialesSeleccionados = []; 
 
+function cargarCapsulasMaterial() { // para cargar las capsulas luego de que tenes los datos para hacerlo
+  materialAUtilizar.innerHTML = "";
+
 materialUtilizado.forEach(mat => { 
     const capsula = document.createElement("div"); 
     capsula.classList.add("capsula"); 
@@ -37,6 +40,7 @@ materialUtilizado.forEach(mat => {
     }); 
     materialAUtilizar.appendChild(capsula); 
 }); 
+}
 
 // Guardar nuevo ejercicio 
 const form = document.getElementById("formExN"); 
@@ -172,4 +176,9 @@ function mostrarEjercicios(filtro = "") {
 }
 
 // Mostrar todos al cargar la página
-document.addEventListener("DOMContentLoaded", () => mostrarEjercicios());
+document.addEventListener("DOMContentLoaded", async () => {
+  await cargarDatos();     // Espera a que los datos estén listos
+  cargarCapsulasMaterial(); // arma el dom
+  mostrarEjercicios();     // muestra todo
+});
+
