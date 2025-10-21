@@ -1,4 +1,13 @@
-
+// trayendo los datos precargados desde json
+let materialUtilizado;
+fetch (/db/materialUt.js)
+ .then(response => response.json())
+ .then(matjson => {
+     materialUtilizado = matjson;
+ })
+  .catch(error => {
+    console.error("Error al cargar la base de datos:", error);
+  });
 
 // Capsulas de material 
 const materialAUtilizar = document.getElementById("materialAUtilizar");
