@@ -2,21 +2,27 @@
 let materialUtilizado = [];
 let ejerciciosPrecargados = [];
 
+
 async function cargarDatos() {
   try {
-    const resMateriales = await fetch('/bd/materialUt.json');
-    const resEjercicios = await fetch('/bd/ejerciciosPrec.json');
+    const resMateriales = await fetch('../bd/materialUt.json');
+    const resEjercicios = await fetch('../bd/ejerciciosPrec.json');
+  
 
-    if (!resMateriales.ok || !resEjercicios.ok) {
+    if (!resMateriales.ok || !resEjercicios.ok ) {
       throw new Error("Error en el fetch");
     }
 
     materialUtilizado = await resMateriales.json();
     ejerciciosPrecargados = await resEjercicios.json();
+  
+
+
   } catch (error) {
     console.error("Error al cargar datos:", error);
   }
 }
+;
 
 //buscador de ejercicios y agregar ejercicios
 
@@ -27,7 +33,7 @@ let materialesSeleccionados = [];
 function cargarCapsulasMaterial() { // para cargar las capsulas luego de que tener los datos para hacerlo
   materialAUtilizar.innerHTML = "";
 
-materialUtilizado.forEach(mat => { 
+ materialUtilizado.forEach(mat => { 
     const capsula = document.createElement("div"); 
     capsula.classList.add("capsula"); 
     capsula.textContent = mat.nombre; 
@@ -54,7 +60,7 @@ form.addEventListener("submit", (e) => {
     let estado;
     if (nombre === ""){
      estado = "vacio" ;
-    }else if (listaCompleta.some(nombre)){
+    }else if (listaCompleta.some(ej => ej.nombre.toLowerCase()=== nombre.toLowerCase())){
      estado = "repetido";
     }else {
      estado= "ok";
@@ -116,7 +122,7 @@ function mostrarEjercicios(filtro = "") {
     listaDiv.innerHTML = ""; // limpiar lista
 
     const ejerciciosGuardados = JSON.parse(localStorage.getItem("ejercicioNs")) || [];
-    const listaCompleta = [...ejerciciosPrecargados, ...ejerciciosGuardados];
+    listaCompleta = [...ejerciciosPrecargados, ...ejerciciosGuardados];
 
     let coincidencias = 0;
 
@@ -181,9 +187,46 @@ function mostrarEjercicios(filtro = "") {
 
 // Mostrar todos al cargar la página
 document.addEventListener("DOMContentLoaded", async () => {
-  await cargarDatos();     // Espera a que los datos estén listos
-  cargarCapsulasMaterial(); // arma el dom
-  mostrarEjercicios();     // muestra todo
+  await cargarDatos();       // primero cargamos JSON
+  cargarCapsulasMaterial();  // luego las capsulas
+  mostrarEjercicios();       // mostrar ejercicios
+  
 });
 
+
 // hacer Rutina 
+// elegir socio , cargar progresion por semana, cargar dias, cargar ejercicios
+
+//socios
+let sociosPrecargados = []
+async function parseSocios () {
+ try {
+    const socPrec = await fetch("../bd/sociosprec.json");
+    if (!socPrec.ok) throw new Error("error al cargar json");
+
+    sociosPrecargados = await socPrec.json();
+    cargarSocios();  
+ }
+ catch (error) {
+    console.error(error);
+ }
+}
+
+function cargarSocios(){
+    const selectSoc = document.getElementById("socios");
+    if(!selectSoc) {
+        console.error ("no se encontro selec");
+        return;
+    }
+
+    selectSoc.innerHTML = '<option value="">Seleccione un socio</option>';
+    sociosPrecargados.forEach(soc => {
+        const option = document.createElement("option");
+        option.value = soc.nombreCompleto;
+        option.textContent= soc.nombreCompleto;
+        selectSoc.appendChild(option);
+    });
+}
+document.addEventListener("DOMContentLoaded", () => {
+    cargarSocios();
+});

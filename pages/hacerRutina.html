@@ -3,10 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!--JS-->
-    <script src="../js/main.js" defer></script>
     <!--boothstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!--JS-->
+    <script src="../js/parse.js" defer> </script>
+    <script src="../js/main.js" defer></script>
 
     <!--fuente-->
 
@@ -34,25 +37,52 @@
     </header>
     <main>
         <h1>Rutina</h1>
-        
-        <section class="selecEjercicio">
-        <!-- Select para elegir el ejercicio -->
-            <select id="selectEjercicio">
-            <option value="">Seleccione un ejercicio</option>
-            </select>
-        </section>
+        <section class="socio"> 
+           <select id="socios">
+              <option value="">Seleccione un socio</option>
+          </select>
 
-        <section class="selecMat">
-            <!-- Select para elegir el material del ejercicio -->
-            <select id="selectMaterial">
-            <option value="">Seleccione un material</option>
-            </select>
+           
         </section>
+<!--
+        <section class="dias+ej">
+            <div class="dias">
+                <input type="number" id="maxDias" placeholder="¿Cuantos días va a entrenar?">
+                <button id="okDias">Guardar</button>
+            </div>
 
-        <section class="ejer+mat">
-            <!-- Div para mostrar la selección final -->
-            <div id="resultado"></div>
-        </section>
+            <div class="ejercicios">       
+
+                <h3>Agregar Ejercicios</h3>      -->  
+            
+                <!-- Select para elegir el ejercicio -->
+    <!--
+              <select id="selectEjercicio">
+                    <option value="">Seleccione un ejercicio</option>
+             </select>
+            
+             <select id="selectMaterial">
+                    <option value="">Seleccione un material</option>
+             </select>
+             <button id="suma">+</button>
+              
+             <ul id="listadoActual"></ul>
+             <button id="btnguardarLA">Guardar día</button>
+
+               
+            </div>
+
+            <section>
+                <h3>Dias</h3>
+                <ul id="DiasGuardados"></ul>
+            </section>
+
+            <section class="semanas"> -->
+                
+            <!--progresion un if -->
+<!--
+            </section>
+        </section>-->
     
     </main>
    <footer>
