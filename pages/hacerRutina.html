@@ -37,10 +37,13 @@
     </header>
     <main>
         <h1>Rutina</h1>
-        <section class="socio"> 
-           <select id="socios">
-              <option value="">Seleccione un socio</option>
-          </select>
+        <section class="seleccionarSocio">
+            <h3>Seleccionar Socio</h3>
+
+         <input type="text" id="buscadorSocios" placeholder="Buscar socio...">
+            <ul id="listaSocios"></ul>
+
+
 
            
         </section>
@@ -57,9 +60,9 @@
             
                 <!-- Select para elegir el ejercicio -->
     
-              <select id="selectEjercicio">
-                    <option value="">Seleccione un ejercicio</option>
-             </select>
+              <input type="text" id="buscadorEjercicio" placeholder="Buscar ejercicio...">
+              <ul id="ejercicioASelecc"></ul>
+
             
              <select id="selectMaterial">
                     <option value="">Seleccione un material</option>

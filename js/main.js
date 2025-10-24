@@ -39,31 +39,31 @@ function filtrarLista(lista, texto, propiedad = "nombre") {
 }
 
 
-// trayendo los datos precargados desde json
 let materialUtilizado = [];
 let ejerciciosPrecargados = [];
-
+let listaCompleta = []; // Para el buscador de ejercicios
 
 async function cargarDatos() {
   try {
+    // Traer JSON de materiales y ejercicios
     const resMateriales = await fetch('../bd/materialUt.json');
     const resEjercicios = await fetch('../bd/ejerciciosPrec.json');
-  
-
-    if (!resMateriales.ok || !resEjercicios.ok ) {
-      throw new Error("Error en el fetch");
-    }
+    if (!resMateriales.ok || !resEjercicios.ok) throw new Error("Error en el fetch");
 
     materialUtilizado = await resMateriales.json();
     ejerciciosPrecargados = await resEjercicios.json();
-  
 
+   
+    const ejerciciosGuardados = GuardarLS.obtener("ejercicioNs") || [];
+
+    listaCompleta = [...ejerciciosPrecargados, ...ejerciciosGuardados];
+
+  
 
   } catch (error) {
     console.error("Error al cargar datos:", error);
   }
 }
-;
 
 //buscador de ejercicios y agregar ejercicios
 
@@ -150,15 +150,14 @@ function listaNuevosEj(ejercicioN) {
     mostrarEjercicios(); 
 }
 
-let listaCompleta = [] ; //para obtener acceso desde cualquier lado
+
 
 // mostrar ejercicios + filtro
 function mostrarEjercicios(filtro = "") {
   const listaDiv = document.getElementById("ListaEjercicios");
   listaDiv.innerHTML = ""; // limpiar lista
 
-  const ejerciciosGuardados = GuardarLS.obtener("ejercicioNs") || [];
-  listaCompleta = [...ejerciciosPrecargados, ...ejerciciosGuardados];
+
 
   //  filtro global
   const listaFiltrada = filtrarLista(listaCompleta, filtro);
@@ -224,6 +223,7 @@ if (buscador) {
 
 let sociosPrecargados = [];
 
+// Cargar socios desde JSON
 async function cargarSociosJSON() {
     try {
         const res = await fetch("../bd/sociosprec.json");
@@ -233,7 +233,6 @@ async function cargarSociosJSON() {
         if (!Array.isArray(data)) throw new Error("Formato inesperado: JSON no es un array");
 
         sociosPrecargados = data;
-        llenarSelectSocios();
     } catch (error) {
         console.error("Error al cargar socios:", error);
         if (window.Swal) {
@@ -242,24 +241,114 @@ async function cargarSociosJSON() {
     }
 }
 
-function llenarSelectSocios() {
-    const select = document.getElementById("socios");
-    if (!select) {
-        console.error("No se encontró el select");
-        return;
-    }
-    select.innerHTML = '<option value="">Seleccione un socio</option>';
+// Mostrar coincidencias según lo que se escribe
+function mostrarSocios(filtro) {
+    const lista = document.getElementById("listaSocios");
+    if (!lista) return;
+    lista.innerHTML = "";
 
-    sociosPrecargados.forEach((soc, idx) => {
-        const option = document.createElement("option");
-  
-        option.value = soc.nombreCompleto ;
-    option.textContent = (soc.nombreCompleto ?? `${soc.nombre ?? ''} ${soc.apellido ?? ''}`.trim()) || JSON.stringify(soc);
-        select.appendChild(option);
+    if (!filtro) return; // Si no hay texto, no mostramos nada
+
+    const texto = filtro.toLowerCase();
+
+    sociosPrecargados
+        .filter(soc => (soc.nombreCompleto ?? `${soc.nombre ?? ''} ${soc.apellido ?? ''}`).toLowerCase().includes(texto))
+        .forEach(soc => {
+            const li = document.createElement("li");
+            li.textContent = soc.nombreCompleto ?? `${soc.nombre ?? ''} ${soc.apellido ?? ''}`.trim();
+            
+            li.addEventListener("click", () => {
+                // Seleccionar socio y limpiar lista
+                const buscador = document.getElementById("buscadorSocios");
+                buscador.value = li.textContent;
+                lista.innerHTML = "";
+            });
+
+            lista.appendChild(li);
+        });
+}
+
+// Evento input
+const buscadorSocios = document.getElementById("buscadorSocios");
+if (buscadorSocios) {
+    buscadorSocios.addEventListener("input", () => {
+        mostrarSocios(buscadorSocios.value);
     });
 }
 
+
 //condicional que repita el formulario de listado de ejrcicios + materiales x cantidad de veces
+const maxDias = document.getElementById("maxDias");
+const okDias = document.getElementById("okDias");
+const DiasGuardados = document.getElementById("DiasGuardados");
+
+if (maxDias && okDias && DiasGuardados) {
+  let numeroDias = 0;
+
+  okDias.addEventListener("click", () => {
+    numeroDias = parseInt(maxDias.value);
+    if (isNaN(numeroDias) || numeroDias <= 0) return alert("Ingrese un número válido");
+
+    // Limpiar lista de días
+    DiasGuardados.innerHTML = "";
+
+    // Crear lista de días
+    for (let i = 1; i <= numeroDias; i++) {
+      const li = document.createElement("li");
+      li.textContent = `Día ${i}`;
+      DiasGuardados.appendChild(li);
+    }
+
+  
+  });
+}
+
+
+//elegir ejercicios y material 
+const buscadorEjercicio = document.getElementById("buscadorEjercicio");
+const listaEjercicios = document.getElementById("ejercicioASelecc");
+const selectMaterial = document.getElementById("selectMaterial");
+
+// Mostrar ejercicios filtrados
+function mostrarEjerciciosBuscador(filtro) {
+    listaEjercicios.innerHTML = "";
+    if (!filtro) return; // no mostrar nada si el input está vacío
+
+    const texto = filtro.toLowerCase();
+
+    listaCompleta
+        .filter(ej => ej.nombre.toLowerCase().includes(texto))
+        .forEach(ej => {
+            const li = document.createElement("li");
+            li.textContent = ej.nombre;
+
+            li.addEventListener("click", () => {
+                buscadorEjercicio.value = li.textContent;
+
+                // Mostrar solo los materiales de este ejercicio en el select
+                selectMaterial.innerHTML = '<option value="">Seleccione un material</option>';
+                const materiales = ej.materiales || ej.material || [];
+                materiales.forEach(mat => {
+                    const option = document.createElement("option");
+                    option.value = typeof mat === "string" ? mat : mat.nombre;
+                    option.textContent = typeof mat === "string" ? mat : mat.nombre;
+                    selectMaterial.appendChild(option);
+                });
+
+                // Limpiar lista de resultados
+                listaEjercicios.innerHTML = "";
+            });
+
+            listaEjercicios.appendChild(li);
+        });
+}
+
+// Evento input
+if (buscadorEjercicio) {
+    buscadorEjercicio.addEventListener("input", () => {
+        mostrarEjerciciosBuscador(buscadorEjercicio.value);
+    });
+}
 
 
 
@@ -272,4 +361,5 @@ document.addEventListener("DOMContentLoaded", async () => {
  
   cargarCapsulasMaterial();
   mostrarEjercicios();
+  
 });
