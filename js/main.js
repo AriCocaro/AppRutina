@@ -73,7 +73,7 @@ let materialesSeleccionados = [];
 
 function cargarCapsulasMaterial() { // para cargar las capsulas luego de que tener los datos para hacerlo
     
-    if (!materialAUtilizar) return;
+    if (!materialAUtilizar || materialUtilizado.length === 0) return;
     materialAUtilizar.innerHTML = "";
 
     materialUtilizado.forEach(mat => { 
@@ -144,7 +144,7 @@ if (form) {
 }
 // Guardar en localStorage 
 function listaNuevosEj(ejercicioN) { 
-    let ejercicioNs = GuardarLS.obtener("ejercicioNs"); 
+    let ejercicioNs = GuardarLS.obtener("ejercicioNs")  || []; 
     ejercicioNs.push(ejercicioN); 
     GuardarLS.guardar("ejercicioNs", ejercicioNs);     
     mostrarEjercicios(); 
@@ -155,6 +155,7 @@ function listaNuevosEj(ejercicioN) {
 // mostrar ejercicios + filtro
 function mostrarEjercicios(filtro = "") {
   const listaDiv = document.getElementById("ListaEjercicios");
+  if (!listaDiv) return;
   listaDiv.innerHTML = ""; // limpiar lista
 
 
@@ -306,60 +307,93 @@ if (maxDias && okDias && DiasGuardados) {
 
 //elegir ejercicios y material 
 const buscadorEjercicio = document.getElementById("buscadorEjercicio");
-const listaEjercicios = document.getElementById("ejercicioASelecc");
+const ejercicioASelecc = document.getElementById("ejercicioASelecc");
 const selectMaterial = document.getElementById("selectMaterial");
-
 // Mostrar ejercicios filtrados
+ 
 function mostrarEjerciciosBuscador(filtro) {
-    listaEjercicios.innerHTML = "";
-    if (!filtro) return; // no mostrar nada si el input está vacío
+  ejercicioASelecc.innerHTML = "";
+  if (!filtro) return; // no mostrar nada si el input está vacío
+  const texto = filtro.toLowerCase();
 
-    const texto = filtro.toLowerCase();
+  listaCompleta
+  .filter(ej => ej.nombre.toLowerCase().includes(texto))
+  .forEach(ej => {
+  const li = document.createElement("li");
+  li.textContent = ej.nombre;
 
-    listaCompleta
-        .filter(ej => ej.nombre.toLowerCase().includes(texto))
-        .forEach(ej => {
-            const li = document.createElement("li");
-            li.textContent = ej.nombre;
+ li.addEventListener("click", () => {
+   buscadorEjercicio.value = li.textContent;
+   // Mostrar solo los materiales de este ejercicio en el select
+   selectMaterial.innerHTML = '<option value="">Seleccione un material</option>';
+   const materiales = ej.materiales || ej.material || [];
+   materiales.forEach(mat => {
+     const option = document.createElement("option");
+     option.value = typeof mat === "string" ? mat : mat.nombre;
+     option.textContent = typeof mat === "string" ? mat : mat.nombre;
+     selectMaterial.appendChild(option);
+   });
 
-            li.addEventListener("click", () => {
-                buscadorEjercicio.value = li.textContent;
+   // Limpiar lista de resultados
+   ejercicioASelecc.innerHTML = "";
+ });
 
-                // Mostrar solo los materiales de este ejercicio en el select
-                selectMaterial.innerHTML = '<option value="">Seleccione un material</option>';
-                const materiales = ej.materiales || ej.material || [];
-                materiales.forEach(mat => {
-                    const option = document.createElement("option");
-                    option.value = typeof mat === "string" ? mat : mat.nombre;
-                    option.textContent = typeof mat === "string" ? mat : mat.nombre;
-                    selectMaterial.appendChild(option);
-                });
-
-                // Limpiar lista de resultados
-                listaEjercicios.innerHTML = "";
-            });
-
-            listaEjercicios.appendChild(li);
-        });
+  ejercicioASelecc.appendChild(li);
+ });
 }
-
 // Evento input
 if (buscadorEjercicio) {
-    buscadorEjercicio.addEventListener("input", () => {
-        mostrarEjerciciosBuscador(buscadorEjercicio.value);
-    });
+  buscadorEjercicio.addEventListener("input", () => {
+    mostrarEjerciciosBuscador(buscadorEjercicio.value);
+ });
 }
 
+const agregarEj = document.getElementById("agregarEj");
+const listadoActual = document.getElementById("listadoActual");
+const ejerciciosDia = []; // array para guardar los ejercicios agregados
+
+if (agregarEj && buscadorEjercicio && selectMaterial && listadoActual) {
+  agregarEj.addEventListener("click", () => {
+    const nombreEj = buscadorEjercicio.value.trim();
+    const materialEl = selectMaterial.value.trim();
+
+    if (nombreEj === "") {
+      alert("Seleccione o escriba un ejercicio");
+      return;
+    }
+
+    if (materialEl === "") {
+      alert("Seleccione un material");
+      return;
+    }
+
+    // Crear objeto y guardarlo en el array
+    const objEjercicio = { nombre: `${nombreEj} con ${materialEl}` };
+    ejerciciosDia.push(objEjercicio);
+
+    // Mostrar en la lista
+    const li = document.createElement("li");
+    li.textContent = objEjercicio.nombre;
+    listadoActual.appendChild(li);
+
+    // Limpiar campos
+    buscadorEjercicio.value = "";
+    selectMaterial.value = "";
+  });
+}
 
 
 // Mostrar todos al cargar la página
 document.addEventListener("DOMContentLoaded", async () => {
-  
   await cargarDatos();
-  
   await cargarSociosJSON();
+
+  // Cargar capsulas solo si el contenedor existe
+  
+ cargarCapsulasMaterial();
+  
+
  
-  cargarCapsulasMaterial();
-  mostrarEjercicios();
+ mostrarEjercicios();
   
 });
