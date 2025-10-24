@@ -1,3 +1,44 @@
+//globales para varias cosas
+
+//variable global para guardar en localstorage 
+const GuardarLS = {
+  guardar(key, value) {
+    try {
+      const data = JSON.stringify(value);
+      localStorage.setItem(key, data);
+    } catch (error) {
+      console.error(`Error al guardar en localStorage con clave "${key}":`, error);
+    }
+  },
+
+  obtener(key) {
+    try {
+      const data = localStorage.getItem(key);
+      return data ? JSON.parse(data) : null;
+    } catch (error) {
+      console.error(`Error al obtener datos de localStorage con clave "${key}":`, error);
+      return null;
+    }
+  },
+
+  borrarItem(key) {
+    localStorage.removeItem(key);
+  },
+
+  borrarTodo() {
+    localStorage.clear();
+  }
+};
+
+
+//global de filtro 
+
+function filtrarLista(lista, texto, propiedad = "nombre") {
+  const filtro = texto.toLowerCase();
+  return lista.filter(item => item[propiedad].toLowerCase().includes(filtro));
+}
+
+
 // trayendo los datos precargados desde json
 let materialUtilizado = [];
 let ejerciciosPrecargados = [];
@@ -31,9 +72,11 @@ const materialAUtilizar = document.getElementById("materialAUtilizar");
 let materialesSeleccionados = []; 
 
 function cargarCapsulasMaterial() { // para cargar las capsulas luego de que tener los datos para hacerlo
-  materialAUtilizar.innerHTML = "";
+    
+    if (!materialAUtilizar) return;
+    materialAUtilizar.innerHTML = "";
 
- materialUtilizado.forEach(mat => { 
+    materialUtilizado.forEach(mat => { 
     const capsula = document.createElement("div"); 
     capsula.classList.add("capsula"); 
     capsula.textContent = mat.nombre; 
@@ -51,7 +94,8 @@ function cargarCapsulasMaterial() { // para cargar las capsulas luego de que ten
 
 // Guardar nuevo ejercicio 
 const form = document.getElementById("formExN"); 
-form.addEventListener("submit", (e) => { 
+if (form) {
+    form.addEventListener("submit", (e) => { 
     e.preventDefault();  
     const nombre = document.getElementById("nombreNuevoEjercicio").value;
     const materiales = materialesSeleccionados; 
@@ -96,137 +140,136 @@ form.addEventListener("submit", (e) => {
 
  
  }
-}); 
+    }); 
+}
 // Guardar en localStorage 
 function listaNuevosEj(ejercicioN) { 
-    let ejercicioNs = JSON.parse(localStorage.getItem("ejercicioNs")) || [];
+    let ejercicioNs = GuardarLS.obtener("ejercicioNs"); 
     ejercicioNs.push(ejercicioN); 
-    localStorage.setItem("ejercicioNs", JSON.stringify(ejercicioNs)); 
+    GuardarLS.guardar("ejercicioNs", ejercicioNs);     
     mostrarEjercicios(); 
-} 
-
-
-const buscador = document.getElementById("buscador");
-
-
-buscador.addEventListener("input", function() {
-    const texto = buscador.value.toLowerCase(); 
-    mostrarEjercicios(texto);
-});
+}
 
 let listaCompleta = [] ; //para obtener acceso desde cualquier lado
 
 // mostrar ejercicios + filtro
 function mostrarEjercicios(filtro = "") {
-    const listaDiv = document.getElementById("ListaEjercicios");
-    listaDiv.innerHTML = ""; // limpiar lista
+  const listaDiv = document.getElementById("ListaEjercicios");
+  listaDiv.innerHTML = ""; // limpiar lista
 
-    const ejerciciosGuardados = JSON.parse(localStorage.getItem("ejercicioNs")) || [];
-    listaCompleta = [...ejerciciosPrecargados, ...ejerciciosGuardados];
+  const ejerciciosGuardados = GuardarLS.obtener("ejercicioNs") || [];
+  listaCompleta = [...ejerciciosPrecargados, ...ejerciciosGuardados];
 
-    let coincidencias = 0;
+  //  filtro global
+  const listaFiltrada = filtrarLista(listaCompleta, filtro);
 
-    // coincidencias
-    for (let i = 0; i < listaCompleta.length; i++) {
-        const ejercicio = listaCompleta[i];
-        if (ejercicio.nombre.toLowerCase().includes(filtro)) {
-            coincidencias++;
+  listaFiltrada.forEach(ejercicio => {
+    const card = document.createElement("div");
+    card.className = "cardEjercicio";
 
-            const card = document.createElement("div");
-            card.className = "cardEjercicio";
+    const titulo = document.createElement("h2");
+    titulo.className = "nombreCard";
+    titulo.textContent = ejercicio.nombre;
+    card.appendChild(titulo);
 
-           
-            const titulo = document.createElement("h2");
-            titulo.className = "nombreCard"
-            titulo.textContent = ejercicio.nombre;
-            card.appendChild(titulo);
-
-            
-
-           
-            if (ejercicio.materiales) {
-                for (let j = 0; j < ejercicio.materiales.length; j++) {
-                    const p = document.createElement("p");
-                    p.textContent = ejercicio.materiales[j];
-                    card.appendChild(p);
-                }
-            } else if (ejercicio.material) {
-                for (let j = 0; j < ejercicio.material.length; j++) {
-                    const p = document.createElement("p");
-                    p.textContent = ejercicio.material[j].nombre;
-                    card.appendChild(p);
-                }
-            }
-
-            listaDiv.appendChild(card);
-        }
-    }
-
-    // Card “Agregar ejercicio” 
-    const cardAgregar = document.createElement("div");
-    cardAgregar.className = "cardEjercicio";
-    cardAgregar.textContent = "Agregar ejercicio";
-
-    cardAgregar.addEventListener("click", () => {
-        
-
-        document.querySelector(".crearEjercicio").classList.remove("invisible");
-        buscador.value = ""; 
-        mostrarEjercicios(); 
+    const materiales = ejercicio.materiales || ejercicio.material || [];
+    materiales.forEach(mat => {
+      const p = document.createElement("p");
+      p.textContent = typeof mat === "string" ? mat : mat.nombre;
+      card.appendChild(p);
     });
 
-    listaDiv.appendChild(cardAgregar);
+    listaDiv.appendChild(card);
+  });
 
-    
-    if (coincidencias === 0 && filtro !== "") {
-        cardAgregar.style.color = "red";
-    } else {
-        cardAgregar.style.color = "black";
-    }
+  // Card  agregar
+  const cardAgregar = document.createElement("div");
+  cardAgregar.className = "cardEjercicio";
+  cardAgregar.textContent = "Agregar ejercicio";
+
+  cardAgregar.addEventListener("click", () => {
+    document.querySelector(".crearEjercicio").classList.remove("invisible");
+    buscador.value = ""; 
+    mostrarEjercicios(); 
+  });
+
+  listaDiv.appendChild(cardAgregar);
+
+  // Cambiar color si no hay coincidencias
+  if (listaFiltrada.length === 0 && filtro !== "") {
+    cardAgregar.style.color = "red";
+  } else {
+    cardAgregar.style.color = "black";
+  }
 }
 
-// Mostrar todos al cargar la página
-document.addEventListener("DOMContentLoaded", async () => {
-  await cargarDatos();       // primero cargamos JSON
-  cargarCapsulasMaterial();  // luego las capsulas
-  mostrarEjercicios();       // mostrar ejercicios
-  
-});
+//buscador perse
+const buscador = document.getElementById("buscador");
+if (buscador) {
+  buscador.addEventListener("input", function () {
+    const texto = buscador.value.toLowerCase();
+    mostrarEjercicios(texto); // se actualiza automáticamente
+  });
+}
+
+
+
 
 
 // hacer Rutina 
 // elegir socio , cargar progresion por semana, cargar dias, cargar ejercicios
 
 //socios
-let sociosPrecargados = []
-async function parseSocios () {
- try {
-    const socPrec = await fetch("../bd/sociosprec.json");
-    if (!socPrec.ok) throw new Error("error al cargar json");
 
-    sociosPrecargados = await socPrec.json();
-    cargarSocios();  
- }
- catch (error) {
-    console.error(error);
- }
+
+let sociosPrecargados = [];
+
+async function cargarSociosJSON() {
+    try {
+        const res = await fetch("../bd/sociosprec.json");
+        if (!res.ok) throw new Error(`HTTP ${res.status} - ${res.statusText}`);
+
+        const data = await res.json();
+        if (!Array.isArray(data)) throw new Error("Formato inesperado: JSON no es un array");
+
+        sociosPrecargados = data;
+        llenarSelectSocios();
+    } catch (error) {
+        console.error("Error al cargar socios:", error);
+        if (window.Swal) {
+            Swal.fire('Error', 'No se pudieron cargar los socios: ' + error.message, 'error');
+        }
+    }
 }
 
-function cargarSocios(){
-    const selectSoc = document.getElementById("socios");
-    if(!selectSoc) {
-        console.error ("no se encontro selec");
+function llenarSelectSocios() {
+    const select = document.getElementById("socios");
+    if (!select) {
+        console.error("No se encontró el select");
         return;
     }
+    select.innerHTML = '<option value="">Seleccione un socio</option>';
 
-    selectSoc.innerHTML = '<option value="">Seleccione un socio</option>';
-    sociosPrecargados.forEach(soc => {
+    sociosPrecargados.forEach((soc, idx) => {
         const option = document.createElement("option");
-        option.value = soc.nombreCompleto;
-        option.textContent= soc.nombreCompleto;
-        selectSoc.appendChild(option);
+  
+        option.value = soc.nombreCompleto ;
+    option.textContent = (soc.nombreCompleto ?? `${soc.nombre ?? ''} ${soc.apellido ?? ''}`.trim()) || JSON.stringify(soc);
+        select.appendChild(option);
     });
 }
-document.addEventListener("DOMContentLoaded", () => {
-    cargarSocios();
+
+//condicional que repita el formulario de listado de ejrcicios + materiales x cantidad de veces
+
+
+
+// Mostrar todos al cargar la página
+document.addEventListener("DOMContentLoaded", async () => {
+  
+  await cargarDatos();
+  
+  await cargarSociosJSON();
+ 
+  cargarCapsulasMaterial();
+  mostrarEjercicios();
 });
