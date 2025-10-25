@@ -144,11 +144,16 @@ if (form) {
 }
 // Guardar en localStorage 
 function listaNuevosEj(ejercicioN) { 
-    let ejercicioNs = GuardarLS.obtener("ejercicioNs")  || []; 
-    ejercicioNs.push(ejercicioN); 
-    GuardarLS.guardar("ejercicioNs", ejercicioNs);     
-    mostrarEjercicios(); 
+  let ejercicioNs = GuardarLS.obtener("ejercicioNs") || []; 
+  ejercicioNs.push(ejercicioN); 
+  GuardarLS.guardar("ejercicioNs", ejercicioNs);     
+
+ 
+  listaCompleta.push(ejercicioN);
+
+  mostrarEjercicios(); 
 }
+
 
 
 
