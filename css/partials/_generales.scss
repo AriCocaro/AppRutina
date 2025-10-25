@@ -95,3 +95,81 @@ footer {
         }
     }
 }
+
+//popup! 
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 9999;
+}
+
+.popup-overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.popup {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 400px;
+  width: 90%;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  animation: aparecer 0.3s ease;
+}
+
+@keyframes aparecer {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.popup-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-header h2 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.popup-cerrar {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.popup-body {
+  margin-top: 15px;
+}
+
+.popup-footer {
+  margin-top: 20px;
+  text-align: right;
+}
+
+.popup-boton {
+  background: #0a74da;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.popup-boton:hover {
+  background: #095cb8;
+}

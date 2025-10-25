@@ -38,6 +38,59 @@ function filtrarLista(lista, texto, propiedad = "nombre") {
   return lista.filter(item => item[propiedad].toLowerCase().includes(filtro));
 }
 
+//global de pop-up! 
+// === FUNCION GLOBAL DE POPUP ===
+function mostrarPopup({ titulo = "Mensaje", contenido = "", textoBoton = "Cerrar", onClose = null }) {
+  // Eliminar si hay uno abierto
+  const existente = document.querySelector(".popup-overlay");
+  if (existente) existente.remove();
+
+  // Crear overlay
+  const overlay = document.createElement("div");
+  overlay.classList.add("popup-overlay");
+
+  // Crear contenedor
+  const popup = document.createElement("div");
+  popup.classList.add("popup");
+
+  // Contenido HTML
+  popup.innerHTML = `
+    <div class="popup-header">
+      <h2>${titulo}</h2>
+      <button class="popup-cerrar">×</button>
+    </div>
+    <div class="popup-body">
+      ${contenido}
+    </div>
+    <div class="popup-footer">
+      <button class="popup-boton">${textoBoton}</button>
+    </div>
+  `;
+
+  // Insertar en el DOM
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+
+  // Mostrar con pequeña animación
+  setTimeout(() => overlay.classList.add("visible"), 10);
+
+  // Función cerrar
+  function cerrarPopup() {
+    overlay.classList.remove("visible");
+    setTimeout(() => overlay.remove(), 300);
+    if (typeof onClose === "function") onClose();
+  }
+
+  // Eventos
+  overlay.querySelector(".popup-cerrar").addEventListener("click", cerrarPopup);
+  overlay.querySelector(".popup-boton").addEventListener("click", cerrarPopup);
+
+  // También cerrar si clic fuera del popup
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) cerrarPopup();
+  });
+}
+
 
 let materialUtilizado = [];
 let ejerciciosPrecargados = [];
@@ -282,34 +335,6 @@ if (buscadorSocios) {
     });
 }
 
-
-//condicional que repita el formulario de listado de ejrcicios + materiales x cantidad de veces
-const maxDias = document.getElementById("maxDias");
-const okDias = document.getElementById("okDias");
-const DiasGuardados = document.getElementById("DiasGuardados");
-
-if (maxDias && okDias && DiasGuardados) {
-  let numeroDias = 0;
-
-  okDias.addEventListener("click", () => {
-    numeroDias = parseInt(maxDias.value);
-    if (isNaN(numeroDias) || numeroDias <= 0) return alert("Ingrese un número válido");
-
-    // Limpiar lista de días
-    DiasGuardados.innerHTML = "";
-
-    // Crear lista de días
-    for (let i = 1; i <= numeroDias; i++) {
-      const li = document.createElement("li");
-      li.textContent = `Día ${i}`;
-      DiasGuardados.appendChild(li);
-    }
-
-  
-  });
-}
-
-
 //elegir ejercicios y material 
 const buscadorEjercicio = document.getElementById("buscadorEjercicio");
 const ejercicioASelecc = document.getElementById("ejercicioASelecc");
@@ -386,6 +411,55 @@ if (agregarEj && buscadorEjercicio && selectMaterial && listadoActual) {
     selectMaterial.value = "";
   });
 }
+
+//hacer visible o no la seccion dias con el boton flotante 
+const btnVerDias = document.getElementById("btnVerDias");
+const seccionDias = document.getElementById("dias");
+
+if (btnVerDias && seccionDias) {
+  btnVerDias.addEventListener("click", () => {
+    seccionDias.classList.toggle("visible");
+  });
+}
+
+//guardar dia 
+const btnGuardarLA = document.getElementById("btnguardarLA");
+let contadorDias = 0;
+let rutinaDias = []; // arreglo para almacenar todos los días antes de guardar rutina
+
+if (btnGuardarLA) {
+  btnGuardarLA.addEventListener("click", () => {
+    if (ejerciciosDia.length === 0) {
+      alert("Agrega ejercicios antes de guardar el día");
+      return;
+    }
+
+    contadorDias++;
+    const diaData = {
+      dia: contadorDias,
+      ejercicios: [...ejerciciosDia],
+    };
+
+    rutinaDias.push(diaData);
+
+    // crear card visual
+    const card = document.createElement("div");
+    card.classList.add("cardDia");
+    card.innerHTML = `
+      <h4>Día ${contadorDias}</h4>
+      <ul>
+        ${diaData.ejercicios.map(ej => `<li>${ej.nombre}</li>`).join("")}
+      </ul>
+    `;
+    DiasGuardados.appendChild(card);
+
+    // limpiar la lista del día actual
+    ejerciciosDia.length = 0;
+    listadoActual.innerHTML = "";
+  });
+}
+
+
 
 
 // Mostrar todos al cargar la página
