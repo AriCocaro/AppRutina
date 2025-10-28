@@ -94,7 +94,21 @@ function mostrarEjerciciosBuscador(filtro) {
 
   ejercicioASelecc.appendChild(li);
  });
+
+ const liAgregar = document.createElement("li");
+ liAgregar.textContent = ` + Agregar ejercicio `;
+ liAgregar.className = "liAgregarE";
+ 
+ liAgregar.addEventListener("click", () => {
+  crearEjercicio(filtro);
+  ejercicioASelecc.innerHTML = "";
+  });
+
+ ejercicioASelecc.appendChild(liAgregar);
+
 }
+
+
 // Evento input
 if (buscadorEjercicio) {
   buscadorEjercicio.addEventListener("input", () => {

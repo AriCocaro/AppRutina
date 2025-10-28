@@ -27,93 +27,84 @@ async function cargarDatos() {
 
 //buscador de ejercicios y agregar ejercicios
 
-// Capsulas de material 
-const materialAUtilizar = document.getElementById("materialAUtilizar");
-let materialesSeleccionados = []; 
+// Función global para crear un ejercicio
+async function crearEjercicio() {
+  if (!materialUtilizado || materialUtilizado.length === 0) {
+    await cargarDatos(); // asegura los datos esten cargados
+  }
 
-function cargarCapsulasMaterial() { // para cargar las capsulas luego de que tener los datos para hacerlo
-    
-    if (!materialAUtilizar || materialUtilizado.length === 0) return;
-    materialAUtilizar.innerHTML = "";
+  // Construir contenido HTML para SweetAlert con capsulas de materiales
+  let htmlMateriales = '<div id="popupMateriales" style="display:flex; flex-wrap: wrap; gap: 5px;">';
+  materialUtilizado.forEach((mat, i) => {
+    htmlMateriales += `<div class="capsulaPopup capsula" data-index="${i}" >${mat.nombre}</div>`;
+  });
+  htmlMateriales += '</div>';
 
-    materialUtilizado.forEach(mat => { 
-    const capsula = document.createElement("div"); 
-    capsula.classList.add("capsula"); 
-    capsula.textContent = mat.nombre; 
-    capsula.addEventListener("click", () => { 
-        capsula.classList.toggle("seleccionada"); 
-        if (materialesSeleccionados.includes(mat.nombre)) { 
-            materialesSeleccionados = materialesSeleccionados.filter(m => m !== mat.nombre); 
-        } else { materialesSeleccionados.push(mat.nombre); 
+  const { value: nombreEjercicio } = await Swal.fire({
+    title: 'Crear ejercicio',
+    html: `
+      <input id="swalNombreEjercicio" class="swal2-input" placeholder="Nombre del ejercicio">
+      <p>Selecciona materiales:</p>
+      ${htmlMateriales}
+    `,
+    focusConfirm: false,
+    showCancelButton: true,
+    preConfirm: () => {
+      const nombre = document.getElementById('swalNombreEjercicio').value.trim();
+      const capsulas = document.querySelectorAll('.capsulaPopup.seleccionada');
+      const materialesSeleccionados = [];
 
+      for (const capsula of capsulas) { 
+        const textoCapsula = capsula.textContent.trim();
+
+        for (const material of materialUtilizado) { 
+          if (material.nombre === textoCapsula) {
+            materialesSeleccionados.push(material.nombre);
+          }
         }
-    }); 
-    materialAUtilizar.appendChild(capsula); 
-}); 
-}
+      }
 
-// Guardar nuevo ejercicio 
-const form = document.getElementById("formExN"); 
-if (form) {
-    form.addEventListener("submit", (e) => { 
-    e.preventDefault();  
-    const nombre = document.getElementById("nombreNuevoEjercicio").value;
-    const materiales = materialesSeleccionados; 
-    const nuevoEjercicio = { nombre: nombre, 
-                             materiales: materiales }; 
-    let estado;
-    if (nombre === ""){
-     estado = "vacio" ;
-    }else if (listaCompleta.some(ej => ej.nombre.toLowerCase()=== nombre.toLowerCase())){
-     estado = "repetido";
-    }else {
-     estado= "ok";
+      return { nombre, materiales: materialesSeleccionados };
     }
 
- switch (estado) {
-  case "vacio":
-  Swal.fire({
-  icon: "error",
-  title: "Oops...",
-  text: "El campo Nombre no puede estar vacío.",
   });
-  break;
-  case "repetido":
-   Swal.fire({
-  icon: "warning",
-  text: "Este ejercicio se encuentra repetido.",
-  });
-  break;
-  case "ok":
-   Swal.fire({
-  title: "Ejercicio guardado con éxito.",
-  icon: "success",
-  draggable: true
+
+  if (nombreEjercicio) {
+    const { nombre, materiales } = nombreEjercicio;
+
+    if (nombre === "") {
+      Swal.fire({ icon: 'error', title: 'Error', text: 'El nombre no puede estar vacío' });
+      return;
+    }
+
+    if (listaCompleta.some(ej => ej.nombre.toLowerCase() === nombre.toLowerCase())) {
+      Swal.fire({ icon: 'warning', text: 'Este ejercicio ya existe' });
+      return;
+    }
+
+    const nuevoEj = { nombre, materiales };
+    // Guardar en LS
+    let ejercicioNs = GuardarLS.obtener("ejercicioNs") || [];
+    ejercicioNs.push(nuevoEj);
+    GuardarLS.guardar("ejercicioNs", ejercicioNs);
+
+    listaCompleta.push(nuevoEj);
+
+    // Actualizar lista visual si existe la función
+  
+    mostrarEjercicios();
+  
+
+    Swal.fire({ icon: 'success', title: 'Ejercicio creado', text: nombre });
+  }
+}
+
+// Agregar selección de capsulas dentro del popup
+document.addEventListener('click', (e) => {
+  if (e.target.classList.contains('capsulaPopup')) {
+    e.target.classList.toggle('seleccionada');
+  }
 });
-  
-  
-    listaNuevosEj(nuevoEjercicio);
-    form.reset(); 
-    materialesSeleccionados = []; // limpia la selección
-   document.querySelectorAll(".capsula").forEach(c => c.classList.remove("seleccionada"));
-   document.querySelector(".crearEjercicio").classList.add("invisible"); // vuelve a cerrar el form
-
- 
-   }
- }); 
-}
-// Guardar en localStorage 
-function listaNuevosEj(ejercicioN) { 
-  let ejercicioNs = GuardarLS.obtener("ejercicioNs") || []; 
-  ejercicioNs.push(ejercicioN); 
-  GuardarLS.guardar("ejercicioNs", ejercicioNs);     
-
- 
-  listaCompleta.push(ejercicioN);
-
-  mostrarEjercicios(); 
-}
-
 
 
 
@@ -152,11 +143,11 @@ function mostrarEjercicios(filtro = "") {
   cardAgregar.className = "cardEjercicio";
   cardAgregar.textContent = "Agregar ejercicio";
 
+
   cardAgregar.addEventListener("click", () => {
-    document.querySelector(".crearEjercicio").classList.remove("invisible");
-    buscador.value = ""; 
-    mostrarEjercicios(); 
+   crearEjercicio();
   });
+
 
   listaDiv.appendChild(cardAgregar);
 
@@ -174,5 +165,13 @@ if (buscador) {
   buscador.addEventListener("input", function () {
     const texto = buscador.value.toLowerCase();
     mostrarEjercicios(texto); // se actualiza automáticamente
+  });
+}
+//crear ejercicio desde boton 
+
+const btnCrearEjercicio = document.getElementById("btnCrearEjercicio");
+if (btnCrearEjercicio) {
+  btnCrearEjercicio.addEventListener("click", () => {
+    crearEjercicio(); // llama a la función global
   });
 }
