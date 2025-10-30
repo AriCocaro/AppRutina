@@ -75,6 +75,41 @@ h1 {
   align-items: center;
 }
 
+.contenido-popup {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.btn-confirmar {
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: black;
+  color: rgb(225, 202, 58);
+}
+
+.btn-cancelar {
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: black;
+  color: rgb(225, 202, 58);
+}
+
+/* Sombra normal */
+.swal2-input {
+  box-shadow: 0 0 5px black 0, 0, 0, 0.2;
+  border-radius: 6px;
+  border: 1px solid rgb(225, 202, 58);
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+/* Sombra al enfocar (focus) */
+.swal2-input:focus {
+  outline: none;
+  box-shadow: 0 0 10px black 0, 0, 0, 0.8;
+  border-color: black;
+}
+
 body {
   background-color: black;
   font-family: "Montserrat", sans-serif;

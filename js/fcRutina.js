@@ -45,6 +45,12 @@ function mostrarSocios(filtro) {
                 const buscador = document.getElementById("buscadorSocios");
                 buscador.value = li.textContent;
                 lista.innerHTML = "";
+
+                const Rutina = document.querySelector(".rutina");
+                if (Rutina) {
+                  Rutina.classList.remove("invisible");
+                  Rutina.classList.add("visible");
+                }
             });
 
             lista.appendChild(li);

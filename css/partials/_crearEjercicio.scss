@@ -87,3 +87,41 @@ justify-content: center;
 align-items: center;
 }
 
+// pop-up
+
+.contenido-popup{
+  display:flex; 
+  flex-wrap: wrap;
+  gap: 5px
+}
+
+
+.btn-confirmar{
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: vars.$Negro;
+  color: vars.$Amarillo;
+}
+
+.btn-cancelar{
+  font-weight: bold;
+  border-radius: 20px;
+  background-color: vars.$Negro;
+  color: vars.$Amarillo;
+}
+
+
+/* Sombra normal */
+.swal2-input {
+  box-shadow: 0 0 5px vars.$Negro(0, 0, 0, 0.2); 
+  border-radius: 6px;
+  border: 1px solid vars.$Amarillo;
+  transition: box-shadow 0.3s, border-color 0.3s;
+}
+
+/* Sombra al enfocar (focus) */
+.swal2-input:focus {
+  outline: none; 
+  box-shadow: 0 0 10px vars.$Negro(0, 0, 0, 0.8); 
+  border-color: vars.$Negro; 
+}

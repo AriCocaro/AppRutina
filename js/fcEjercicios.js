@@ -34,7 +34,7 @@ async function crearEjercicio() {
   }
 
   // Construir contenido HTML para SweetAlert con capsulas de materiales
-  let htmlMateriales = '<div id="popupMateriales" style="display:flex; flex-wrap: wrap; gap: 5px;">';
+  let htmlMateriales = '<div id="popupMateriales" >';
   materialUtilizado.forEach((mat, i) => {
     htmlMateriales += `<div class="capsula" data-index="${i}" >${mat.nombre}</div>`;
   });
@@ -49,6 +49,17 @@ async function crearEjercicio() {
     `,
     focusConfirm: false,
     showCancelButton: true,
+
+    //darle estilo al pop-up
+
+    customClass: {
+      popup: 'popup-ejercicio',   
+      title: 'titulo-popup',
+      confirmButton: 'btn-confirmar',
+      cancelButton: 'btn-cancelar',
+      htmlContainer: 'contenido-popup'
+    },
+
     preConfirm: () => {
       const nombre = document.getElementById('swalNombreEjercicio').value.trim();
       const capsulas = document.querySelectorAll('.capsula.seleccionada');
