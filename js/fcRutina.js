@@ -46,6 +46,8 @@ function mostrarSocios(filtro) {
                 buscador.value = li.textContent;
                 lista.innerHTML = "";
 
+                socioSeleccionado = soc;
+
                 const Rutina = document.querySelector(".rutina");
                 if (Rutina) {
                   Rutina.classList.remove("invisible");
@@ -162,6 +164,7 @@ if (agregarEj && buscadorEjercicio && selectMaterial && listadoActual) {
 const btnGuardarLA = document.getElementById("btnguardarLA");
 let contadorDias = 0;
 let rutinaDias = []; // arreglo para almacenar todos los días antes de guardar rutina
+let socioSeleccionado = null;
 
 if (btnGuardarLA) {
   btnGuardarLA.addEventListener("click", () => {
@@ -194,4 +197,94 @@ if (btnGuardarLA) {
     listadoActual.innerHTML = "";
   });
 }
+
+// guardar rutina por socio con fecha e id unico 
+const btnGuardarRutina = document.getElementById("btnGuardarRutina");
+
+if (btnGuardarRutina) {
+  btnGuardarRutina.addEventListener("click", () => {
+    if (!socioSeleccionado) {
+      alert("Selecciona un socio antes de guardar la rutina");
+      return;
+    }
+
+    if (rutinaDias.length === 0) {
+      alert("Agrega al menos un día antes de guardar la rutina");
+      return;
+    }
+
+    // Generar ID único y fecha actual
+    const idRutina = `rut-${Date.now()}`;
+    const fechaActual = new Date().toISOString().split("T")[0];
+
+    const nuevaRutina = {
+      id: idRutina,
+      fecha: fechaActual,
+      dias: [...rutinaDias]
+    };
+
+    // Obtener rutinas existentes desde localStorage
+    let rutinasGuardadas = GuardarLS.obtener("rutinas") || {};
+
+    // Si el socio no existe en el registro, crearlo
+    if (!rutinasGuardadas[socioSeleccionado.dni]) {
+      rutinasGuardadas[socioSeleccionado.dni] = {
+        nombre: socioSeleccionado.nombreCompleto,
+        rutinas: []
+      };
+    }
+
+    // Agregar la nueva rutina
+    rutinasGuardadas[socioSeleccionado.dni].rutinas.push(nuevaRutina);
+
+    // Guardar en localStorage
+    GuardarLS.guardar("rutinas", rutinasGuardadas);
+
+    // Mensaje visual
+    Swal.fire({
+      icon: "success",
+      title: "Rutina guardada",
+     
+    });
+
+    // Reset visual y contadores
+    rutinaDias = [];
+    contadorDias = 0;
+    DiasGuardados.innerHTML = "";
+  });
+}
+
+//boton flotante
+const btnVerDias = document.getElementById("btnVerDias");
+const DiasGuardados = document.getElementById("DiasGuardados");
+
+btnVerDias.addEventListener("click", () => {
+  const cardsHTML = DiasGuardados.innerHTML.trim();
+
+  if (!cardsHTML) {
+    Swal.fire({
+      icon: "info",
+      title: "Sin días guardados",
+      text: "Aún no agregaste ningún día a la rutina.",
+      confirmButtonText: "Ok"
+    });
+    return;
+  }
+
+  Swal.fire({
+    title: "Días guardados",
+    html: `
+      <div style="
+        max-height: 400px; 
+        overflow-y: auto; 
+        text-align: left;
+      ">
+        ${cardsHTML}
+      </div>
+    `,
+    showConfirmButton: true,
+    confirmButtonText: "Cerrar",
+    width: "40em",
+  });
+});
 
