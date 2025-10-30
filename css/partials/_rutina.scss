@@ -1,28 +1,11 @@
 @use "./paletaDeColores" as vars; 
 @use "./generales" as gen;
 
-.boton-flotante {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #0a74da;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 24px;
-  cursor: pointer;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-  transition: all 0.3s ease;
+input{
+  border-radius: 8px;
 }
-.boton-flotante:hover {
-  transform: scale(1.1);
-  background: #095cb8;
-}
-#dias {
-  display: none; /* oculto por defecto */
-}
-#dias.visible {
-  display: block;
+
+.lista{
+  list-style: none;
+
 }

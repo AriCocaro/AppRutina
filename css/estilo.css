@@ -81,20 +81,6 @@ h1 {
   gap: 5px;
 }
 
-.btn-confirmar {
-  font-weight: bold;
-  border-radius: 20px;
-  background-color: black;
-  color: rgb(225, 202, 58);
-}
-
-.btn-cancelar {
-  font-weight: bold;
-  border-radius: 20px;
-  background-color: black;
-  color: rgb(225, 202, 58);
-}
-
 /* Sombra normal */
 .swal2-input {
   box-shadow: 0 0 5px black 0, 0, 0, 0.2;
@@ -162,12 +148,20 @@ main {
 .btn-primary {
   background-color: rgb(225, 202, 58);
   color: black;
+  border-radius: 20px;
 }
 
 .btn-primary:hover {
   background-color: hsl(0, 0%, -10%);
   color: rgb(225, 202, 58);
   border-color: white;
+  border-radius: 20px;
+}
+
+.btn {
+  font-weight: bold;
+  background-color: black;
+  color: rgb(225, 202, 58);
 }
 
 footer {
@@ -180,115 +174,12 @@ footer {
   max-height: 60px;
 }
 
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.3s ease;
-  z-index: 9999;
-}
-
-.popup-overlay.visible {
-  opacity: 1;
-  pointer-events: auto;
-}
-
-.popup {
-  background: #fff;
-  border-radius: 12px;
-  max-width: 400px;
-  width: 90%;
-  padding: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-  animation: aparecer 0.3s ease;
-}
-
-@keyframes aparecer {
-  from {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  to {
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-.popup-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.popup-header h2 {
-  margin: 0;
-  font-size: 1.3rem;
-}
-
-.popup-cerrar {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.popup-body {
-  margin-top: 15px;
-}
-
-.popup-footer {
-  margin-top: 20px;
-  text-align: right;
-}
-
-.popup-boton {
-  background: #0a74da;
-  color: white;
-  border: none;
-  padding: 8px 16px;
+input {
   border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.3s;
 }
 
-.popup-boton:hover {
-  background: #095cb8;
-}
-
-.boton-flotante {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background: #0a74da;
-  color: white;
-  border: none;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  font-size: 24px;
-  cursor: pointer;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-  transition: all 0.3s ease;
-}
-
-.boton-flotante:hover {
-  transform: scale(1.1);
-  background: #095cb8;
-}
-
-#dias {
-  display: none; /* oculto por defecto */
-}
-
-#dias.visible {
-  display: block;
+.lista {
+  list-style: none;
 }
 
 /*# sourceMappingURL=estilo.css.map */

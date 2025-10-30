@@ -42,8 +42,8 @@
         <section class="seleccionarSocio">
             <h3>Seleccionar Socio</h3>
 
-         <input type="text" id="buscadorSocios" placeholder="Buscar socio...">
-            <ul id="listaSocios"></ul>
+         <input type="text" id="buscadorSocios"  placeholder="Buscar socio...">
+            <ul id="listaSocios" class="lista"></ul>
 
 
 
@@ -59,19 +59,19 @@
                 <!-- Select para elegir el ejercicio -->
     
               <input type="text" id="buscadorEjercicio" placeholder="Buscar ejercicio...">
-              <ul id="ejercicioASelecc"></ul>
+              <ul id="ejercicioASelecc" class="lista"></ul>
 
             
              <select id="selectMaterial">
                     <option value="">Seleccione un material</option>
              </select>
-             <button id="agregarEj">+</button>
+             <button id="agregarEj" class="btn-primary">+</button>
               
-             <ul id="listadoActual"></ul>
+             <ul id="listadoActual" ></ul>
 
-             <button id="btnguardarLA">Guardar día</button>
+             <button id="btnguardarLA" class="btn-primary">Guardar día</button>
 
-             <button id="btnGuardarRutina">Guardar Rutina  </button>
+            
              
 
               
@@ -80,11 +80,7 @@
                
             </div>
 
-          <section class="semanas"> 
-                
-            <!--progresion un if -->
-
-            </section>
+          
 
             <section id="dias">
                 <!--boton flotante para ver los ejercicios que se han cargado--> 
@@ -92,6 +88,16 @@
                 <h3>Dias</h3>
                 <ul id="DiasGuardados"></ul>
             </section>
+
+             
+
+            <section class="semanas"> 
+                <!--si quiere agregar progresión, se -->
+                <button id="btnAgregarProgresion" class="btn-primary">Agregar progresion  </button>
+              <!--progresion un if -->
+
+            </section>
+            <button id="btnGuardarRutina" class="btn-primary">Guardar Rutina  </button>
 
 
         </section>

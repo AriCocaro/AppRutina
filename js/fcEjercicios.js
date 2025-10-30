@@ -55,8 +55,8 @@ async function crearEjercicio() {
     customClass: {
       popup: 'popup-ejercicio',   
       title: 'titulo-popup',
-      confirmButton: 'btn-confirmar',
-      cancelButton: 'btn-cancelar',
+      confirmButton: 'btn',
+      cancelButton: 'btn',
       htmlContainer: 'contenido-popup'
     },
 
