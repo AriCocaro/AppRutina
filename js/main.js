@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // Cargar capsulas solo si el contenedor existe
   
- cargarCapsulasMaterial();
+ 
   
 
  

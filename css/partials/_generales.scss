@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "./paletaDeColores" as vars; 
 
 body{
@@ -60,7 +61,7 @@ main{
 }
 
 .btn-primary:hover {
-  background-color: darken(vars.$Negro, 10%);
+  background-color: color.adjust(vars.$Negro, $lightness: -10%);
   color: vars.$Amarillo;
   border-color: vars.$Blanco;
 
