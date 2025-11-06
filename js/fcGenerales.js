@@ -35,3 +35,7 @@ function filtrarLista(lista, texto, propiedad = "nombre") {
   const filtro = texto.toLowerCase();
   return lista.filter(item => item[propiedad].toLowerCase().includes(filtro));
 }
+
+//traer todo de json 
+
+

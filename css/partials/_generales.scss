@@ -55,20 +55,24 @@ main{
 
 }
 
-.btn-primary {
+button {
   background-color: vars.$Amarillo;
   color: vars.$Negro;
   border-radius: 20px;
 }
 
-.btn-primary:hover {
+button:hover {
   background-color: color.adjust(vars.$Negro, $lightness: -10%);
   color: vars.$Amarillo;
   border-color: vars.$Blanco;
   border-radius: 20px;
 
 }
-.btn{
+
+.swal2-confirm {
+  @extend button;
+}
+  .btn{
   font-weight: bold;
 
   background-color: vars.$Negro;

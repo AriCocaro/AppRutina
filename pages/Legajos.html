@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <!--boothstrap-->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!--JS-->
-    <script src="../js/fcGenerales.js" defer> </script>
-    <script src="../js/fcEjercicios.js" defer> </script>
-    <script src="../js/main.js" defer></script>
+    <script src="../js/fcgenerales.js" defer></script>
+    <script src="../js/fcejercicios.js" defer></script> 
+    <script src="../js/fcrutinas.js" defer></script>    
+    <script src="../js/fcVistaSocios.js" defer></script>  
+    <script src="../js/main.js" defer></script>         
+
 
     <!--fuente-->
 
@@ -23,7 +25,7 @@
     <!--estilo-->
     <link rel="stylesheet" href="../css/estilo.css">
  
-    <title>Busca - Crea Ejercicios</title>
+    <title>Hacer Rutina</title>
 </head>
 <body>
     <header>
@@ -38,38 +40,21 @@
 
     </header>
     <main>
-        <h1>Ejercicios Cargados</h1>
-
-        <section class="crearEjercicio invisible">
-            <form id="formExN">
-                <div class="mb-3">
-                <label for="nombreNuevoEjercicio" class="form-label">Nombre del ejercicio</label>
-                <input type="text" class="form-control" id="nombreNuevoEjercicio">
-                </div>
-
-                <div id="materialAUtilizar"></div>
-
-                <button class="btn btn-primary"  type="submit">Crear Ejercicio</button>
-            </form>
+     <section class="socios">
+            <input 
+            type="text" 
+            id="buscadorSocios" 
+            placeholder="Buscar socio por nombre..."
+            class="form-control mb-3">
+            <ul id="listaSocios" class="list-group"></ul>
         </section>
 
-        <section class="visible">
-            <div id="">
-                <div class="contenedorBuscador">
-                  <input type="text" id="buscador"  placeholder="Buscar ejercicio...">
-                   <button id="btnCrearEjercicio">Crear ejercicio</button>
-                </div>
-                <div ></div>
-                <div class="contenedorCards" id="ListaEjercicios">
+        <section id="detalleSocio" class="detalle-socio invisible"></section>
 
-                </div>
-               
 
-               
 
-            </div>
-        </section>
-  </main>
+
+    </main>
    <footer>
         <div class="pie">
         <h5>Sabemos lo que hacemos.</h5>

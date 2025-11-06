@@ -2,16 +2,22 @@
 let materialUtilizado = [];
 let ejerciciosPrecargados = [];
 let listaCompleta = []; // Para el buscador de ejercicios
-
+let rutinasPrecargadas = [];
+let sociosPrecargados = [];
 async function cargarDatos() {
   try {
     // Traer JSON de materiales y ejercicios
     const resMateriales = await fetch('../bd/materialUt.json');
     const resEjercicios = await fetch('../bd/ejerciciosPrec.json');
+    const resRutinas = await fetch('../bd/rutinasPrec.json');
+    const resSociosPrec = await fetch('../bd/sociosprec.json');
+
     if (!resMateriales.ok || !resEjercicios.ok) throw new Error("Error en el fetch");
 
     materialUtilizado = await resMateriales.json();
     ejerciciosPrecargados = await resEjercicios.json();
+    rutinasPrecargadas = await resRutinas.json();
+    sociosPrecargados = await resSociosPrec.json();
 
    
     const ejerciciosGuardados = GuardarLS.obtener("ejercicioNs") || [];

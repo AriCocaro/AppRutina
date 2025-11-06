@@ -10,7 +10,10 @@
     <!--JS-->
     <script src="../js/fcGenerales.js" defer> </script>
     <script src="../js/fcEjercicios.js" defer></script>
+    <script src="../js/fcvistaRutinas.js" defer></script>
     <script src="../js/fcRutina.js" defer> </script>
+    <script src="../js/fcVistaSocios.js" defer></script>
+
     <script src="../js/main.js" defer></script>
 
     <!--fuente-->
@@ -38,72 +41,21 @@
 
     </header>
     <main>
-        <h1>Rutina</h1>
-        <section class="seleccionarSocio">
-            <h3>Seleccionar Socio</h3>
-
-         <input type="text" id="buscadorSocios"  placeholder="Buscar socio...">
-            <ul id="listaSocios" class="lista"></ul>
-
-
-
-           
-        </section>
-
-       <section class="rutina invisible"
-
-            <div class="ejercicios">       
-
-                <h3>Agregar Ejercicios</h3>      
-            
-                <!-- Select para elegir el ejercicio -->
-    
-              <input type="text" id="buscadorEjercicio" placeholder="Buscar ejercicio...">
-              <ul id="ejercicioASelecc" class="lista"></ul>
-
-            
-             <select id="selectMaterial">
-                    <option value="">Seleccione un material</option>
-             </select>
-             <button id="agregarEj" class="btn-primary">+</button>
-              
-             <ul class="lista" id="listadoActual" ></ul>
-
-             <button id="btnguardarLA" class="btn-primary">Guardar día</button>
-
-            
-             
-
-              
-
-
-               
-            </div>
-
-          
-
-           
-          
-
-     
+     <h1>Rutina</h1>
+     <div class="container mt-4">
+            <h1 id="tituloSocio"></h1>
+            <p id="infoSocio"></p>
+            <ul id="listaRutinas" class="list-group mb-4"></ul>
+            <button id="btnAgregarRutina" class="btn btn-primary">Agregar rutina</button>
+            <section id="detalleRutina" class="mt-4"></section>
+        </div>
 
         
 
-         <section id="dias ">
-                <!--boton flotante para ver los ejercicios que se han cargado--> 
-               <button id="btnVerDias" class="boton-flotante btn-primary">📅</button>
-
-               <div class="invisible">
-                    <h3>Dias</h3>
-                    <ul class="lista" id="DiasGuardados"></ul>
-                </div>
-            </section>
-
-            <button id="btnGuardarRutina" class="btn-primary">Guardar Rutina  </button>
 
 
-        </section>
-    
+
+
     </main>
    <footer>
         <div class="pie">

@@ -1,0 +1,65 @@
+{
+  "38170884": {
+    "nombre": "Ariadna Camila Cocaro",
+    "rutinas": [
+      {
+        "id": "rut-1762273167230",
+        "fecha": "2025-11-04",
+        "dias": [
+          {
+            "dia": 1,
+            "ejercicios": [
+              { "nombre": "Sentadillas con Barra" },
+              { "nombre": "press plano con Maquina" }
+            ]
+          },
+          {
+            "dia": 2,
+            "ejercicios": [
+              { "nombre": "Peso muerto con Mancuernas" },
+              { "nombre": "Remo Serrucho con Mancuernas" }
+            ]
+          }
+        ]
+      }
+      
+    ]
+  },
+
+  "39718189": {
+    "nombre": "Juan Patricio Flejas",
+    "rutinas": [
+              
+      {
+        "id": "rut-1752437001372",
+        "fecha": "2025-11-06",
+        "dias": [
+          {
+            "dia": 1,
+            "ejercicios": [
+              { "nombre": "Sentadillas con Barra" }
+            ]
+          },
+          {
+            "dia": 2,
+            "ejercicios": [
+              { "nombre": "Sentadillas con Barra" }
+            ]
+          },
+          {
+            "dia": 3,
+            "ejercicios": [
+              { "nombre": "Sentadillas con Barra" }
+            ]
+          },
+          {
+            "dia": 4,
+            "ejercicios": [
+              { "nombre": "Sentadillas con Barra" }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
