@@ -1,6 +1,32 @@
 (async () => {
-  // Esperar a que cargarDatos() (de fcejercicios.js) ya haya cargado sociosPrecargados
-  if (!sociosPrecargados || sociosPrecargados.length === 0) {
+  // Esperar a que cargarDatos() (de fcEjercicios.js) ya haya cargado sociosPrecargados
+  // Esperar a que el DOM esté listo y los scripts anteriores se hayan cargado
+  await new Promise((resolve, reject) => {
+    if (typeof cargarDatos !== 'undefined') {
+      resolve();
+      return;
+    }
+    
+    let attempts = 0;
+    const maxAttempts = 100; // 1 segundo máximo de espera
+    
+    const checkInterval = setInterval(() => {
+      attempts++;
+      if (typeof cargarDatos !== 'undefined') {
+        clearInterval(checkInterval);
+        resolve();
+      } else if (attempts >= maxAttempts) {
+        clearInterval(checkInterval);
+        console.error('Error: cargarDatos no se pudo cargar');
+        reject(new Error('cargarDatos no disponible'));
+      }
+    }, 10);
+  }).catch(() => {
+    // Si falla, intentar continuar de todas formas
+    console.warn('Continuando sin cargarDatos');
+  });
+  
+  if (typeof cargarDatos !== 'undefined' && (!sociosPrecargados || sociosPrecargados.length === 0)) {
     await cargarDatos();
   }
 
